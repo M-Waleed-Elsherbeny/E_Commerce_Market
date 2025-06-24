@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
-import 'package:my_e_commerce_app/screens/auth/UI/login_screen.dart';
+import 'package:my_e_commerce_app/screens/auth/ui/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
