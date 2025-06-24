@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  height: deviceHeight! * 0.5,
+                  height: deviceHeight! * 0.45,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,6 +103,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         textButton: "Login",
                       ),
                       SizedBox(height: deviceHeight! * 0.02),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: deviceWidth! * 0.2,
+                            child: Divider(color: AppColors.kGreyColor),
+                          ),
+                          Text("Or Sign Up With"),
+                          SizedBox(
+                            width: deviceWidth! * 0.2,
+                            child: Divider(color: AppColors.kGreyColor),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: deviceHeight! * 0.01),
                       CustomLoginMethods(deviceWidth: deviceWidth),
                       Spacer(),
                       Row(
@@ -110,7 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text("Don't have an account?"),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.registerScreen,
+                              );
+                            },
                             child: Text(
                               "Register Now",
                               style: TextStyle(
