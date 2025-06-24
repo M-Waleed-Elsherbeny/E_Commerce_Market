@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
-import 'package:my_e_commerce_app/screens/auth/ui/login_screen.dart';
+import 'package:my_e_commerce_app/core/routes/app_routes_config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'E-Commerce Market',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: AppColors.kScaffoldColor),
-      home: LoginScreen(),
+      onGenerateRoute: AppRoutesConfig().onGenerateRoute,
     );
   }
 }

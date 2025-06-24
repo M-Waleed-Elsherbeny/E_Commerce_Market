@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
-import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/screens/auth/ui/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/auth/ui/widgets/custom_text_field.dart';
-import 'package:my_e_commerce_app/screens/auth/ui/widgets/custom_login_methods.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   double? deviceWidth, deviceHeight;
+
   @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
@@ -24,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Text(
-                "Welcome To Our Market",
+                "Reset Your Password",
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               Center(
@@ -50,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  height: deviceHeight! * 0.5,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,61 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: deviceHeight! * 0.02),
-                      CustomTextFormField(
-                        isPassword: true,
-                        labelText: "Password",
-                        prefixIcon: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.lock_outline,
-                            color: AppColors.kPrimaryColor,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.forgetPasswordScreen,
-                            );
-                          },
-                          child: Text(
-                            "Forget Password?",
-                            style: TextStyle(
-                              color: AppColors.kPrimaryColor,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: deviceHeight! * 0.01),
+                      SizedBox(height: deviceHeight! * 0.05),
                       CustomButton(
                         deviceWidth: deviceWidth,
                         deviceHeight: deviceHeight,
-                        textButton: "Login",
+                        textButton: "Send Reset Link",
                       ),
                       SizedBox(height: deviceHeight! * 0.02),
-                      CustomLoginMethods(deviceWidth: deviceWidth),
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Don't have an account?"),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Register Now",
-                              style: TextStyle(
-                                color: AppColors.kPrimaryColor,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
