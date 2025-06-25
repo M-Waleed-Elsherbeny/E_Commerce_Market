@@ -73,9 +73,14 @@ class MainNavBar extends StatelessWidget {
               ),
             ),
 
-            body: IndexedStack(
-              index: cubit.currentIndex, // This index will be updated based on the selected tab
-              children: _screens,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: IndexedStack(
+                index:
+                    cubit
+                        .currentIndex, // This index will be updated based on the selected tab
+                children: _screens,
+              ),
             ),
           );
         },
