@@ -42,7 +42,7 @@ class MainNavBar extends StatelessWidget {
                   gap: 10, // the tab button gap between icon and text
                   color: AppColors.kGreyColor, // unselected icon color
                   activeColor:
-                      AppColors.kWhiteColor, // selected icon and text color
+                      AppColors.kYellowColor, // selected icon and text color
                   iconSize: 30, // tab button icon size
                   tabBackgroundColor:
                       AppColors.kPrimaryColor, // selected tab background color

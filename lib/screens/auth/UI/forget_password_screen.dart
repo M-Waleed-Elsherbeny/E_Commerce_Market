@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
 
@@ -41,7 +42,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         offset: Offset(8, 0),
                       ),
                       BoxShadow(
-                        color: Colors.redAccent.shade100,
+                        color: AppColors.kYellowColor,
                         blurRadius: 10,
                         spreadRadius: 1,
                         offset: Offset(-10, 10),
@@ -64,13 +65,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: deviceHeight! * 0.05),
+                      HeightSpacer(height: 10),
                       CustomButton(
                         deviceWidth: deviceWidth,
                         deviceHeight: deviceHeight,
                         textButton: "Send Reset Link",
+                        onPressed: () {
+                          // Handle send reset link action
+                        },
                       ),
-                      SizedBox(height: deviceHeight! * 0.02),
+                      HeightSpacer(height: 10),
                     ],
                   ),
                 ),

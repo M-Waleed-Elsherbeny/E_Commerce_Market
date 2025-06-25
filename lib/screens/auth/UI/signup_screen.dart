@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_login_methods.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
@@ -42,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         offset: Offset(8, 0),
                       ),
                       BoxShadow(
-                        color: Colors.redAccent.shade100,
+                        color: AppColors.kYellowColor,
                         blurRadius: 10,
                         spreadRadius: 1,
                         offset: Offset(-10, 10),
@@ -66,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: deviceHeight! * 0.02),
+                      HeightSpacer(height: 10),
                       CustomTextFormField(
                         labelText: "Email",
                         prefixIcon: IconButton(
@@ -77,7 +78,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: deviceHeight! * 0.02),
+                      HeightSpacer(height: 10),
                       CustomTextFormField(
                         isPassword: true,
                         labelText: "Password",
@@ -89,13 +90,14 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: deviceHeight! * 0.04),
+                      HeightSpacer(height: 30),
                       CustomButton(
                         deviceWidth: deviceWidth,
                         deviceHeight: deviceHeight,
                         textButton: "Sign Up",
+                        onPressed: () {},
                       ),
-                      SizedBox(height: deviceHeight! * 0.02),
+                      HeightSpacer(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -110,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: deviceHeight! * 0.01),
+                      HeightSpacer(height: deviceHeight! * 0.01),
                       CustomLoginMethods(deviceWidth: deviceWidth),
                       Spacer(),
                       Row(
