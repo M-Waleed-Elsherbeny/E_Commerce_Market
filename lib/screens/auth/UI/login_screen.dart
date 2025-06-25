@@ -4,7 +4,6 @@ import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_login_methods.dart';
-import 'package:my_e_commerce_app/screens/navigation/ui/main_nav_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
