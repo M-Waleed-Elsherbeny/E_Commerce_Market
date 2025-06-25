@@ -72,7 +72,6 @@ class MainNavBar extends StatelessWidget {
                 ),
               ),
             ),
-
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: IndexedStack(
