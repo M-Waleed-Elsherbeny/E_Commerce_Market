@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.yellowAccent,
+      color: Colors.blueAccent,
       child: Center(
         child: Text(
-          'Home Screen',
+          'Favorite Screen',
           style: TextStyle(fontSize: 24, color: Colors.black),
         ),
       ),

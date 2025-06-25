@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class StoreScreen extends StatelessWidget {
+  const StoreScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.yellowAccent,
+      color: Colors.purpleAccent,
       child: Center(
         child: Text(
-          'Home Screen',
+          'Store Screen',
           style: TextStyle(fontSize: 24, color: Colors.black),
         ),
       ),
