@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
-import 'package:my_e_commerce_app/screens/auth/ui/widgets/custom_button.dart';
-import 'package:my_e_commerce_app/screens/auth/ui/widgets/custom_text_field.dart';
+import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
+import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes_config.dart';
+import 'package:my_e_commerce_app/screens/home/ui/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: AppColors.kScaffoldColor),
       onGenerateRoute: AppRoutesConfig().onGenerateRoute,
+      
     );
   }
 }

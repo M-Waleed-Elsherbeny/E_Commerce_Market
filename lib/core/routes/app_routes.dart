@@ -3,4 +3,5 @@ class AppRoutes {
   static const String loginScreen = 'loginScreen';
   static const String forgetPasswordScreen = 'forgetPasswordScreen';
   static const String registerScreen = 'registerScreen';
+  static const String mainNavBar = 'mainNavBar';
 }

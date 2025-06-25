@@ -7,9 +7,11 @@ class CustomButton extends StatelessWidget {
     this.deviceWidth,
     this.deviceHeight,
     required this.textButton,
+    this.onPressed,
   });
   final double? deviceWidth, deviceHeight;
   final String textButton;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class CustomButton extends StatelessWidget {
         backgroundColor: AppColors.kPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(
         textButton,
         style: TextStyle(
