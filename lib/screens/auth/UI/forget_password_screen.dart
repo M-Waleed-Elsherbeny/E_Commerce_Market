@@ -68,7 +68,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       HeightSpacer(height: 10),
                       CustomButton(
                         deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight,
+                        deviceHeight: deviceHeight! * 0.05,
                         textButton: "Send Reset Link",
                         onPressed: () {
                           // Handle send reset link action

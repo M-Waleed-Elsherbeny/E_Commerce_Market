@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       HeightSpacer(height: 10),
                       CustomButton(
                         deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight,
+                        deviceHeight: deviceHeight! * 0.05,
                         textButton: "Login",
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.mainNavBar);
