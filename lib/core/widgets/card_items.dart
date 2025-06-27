@@ -7,8 +7,24 @@ import 'package:my_e_commerce_app/core/widgets/width_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/home/models/card_items_model.dart';
 
-class ProductsCardItems extends StatelessWidget {
-  const ProductsCardItems({
+class ProductCardItems extends StatelessWidget {
+  const ProductCardItems({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: CardItemsModel.cardItems.length,
+      itemBuilder: (context, index) {
+        return CardItems(index: index, cardItemsList: CardItemsModel.cardItems);
+      },
+    );
+  }
+}
+
+class CardItems extends StatelessWidget {
+  const CardItems({
     super.key,
     required this.cardItemsList,
     required this.index,

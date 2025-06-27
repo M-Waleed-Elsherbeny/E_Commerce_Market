@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
-import 'package:my_e_commerce_app/screens/auth/widgets/custom_profile_button.dart';
+import 'package:my_e_commerce_app/screens/profile/widgets/custom_profile_button.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -47,14 +48,18 @@ class ProfileScreen extends StatelessWidget {
                     textButton: "Edit Profile",
                     leftIcon: Icons.edit_rounded,
                     rightIcon: Icons.arrow_forward_ios_rounded,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.editProfileScreen);
+                    },
                   ),
                   HeightSpacer(height: 20),
                   CustomProfileButton(
                     textButton: "My Orders",
                     leftIcon: Icons.shopping_bag_rounded,
                     rightIcon: Icons.arrow_forward_ios_rounded,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.myOrdersView);
+                    },
                   ),
                   HeightSpacer(height: 20),
                   CustomProfileButton(

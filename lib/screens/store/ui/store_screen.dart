@@ -4,7 +4,6 @@ import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/widgets/card_items.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_search_field.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
-import 'package:my_e_commerce_app/screens/home/models/card_items_model.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -33,17 +32,7 @@ class StoreScreen extends StatelessWidget {
           ),
         ),
         HeightSpacer(height: 10),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: CardItemsModel.cardItems.length,
-          itemBuilder: (context, index) {
-            return ProductsCardItems(
-              index: index,
-              cardItemsList: CardItemsModel.cardItems,
-            );
-          },
-        ),
+        ProductCardItems(),
         HeightSpacer(height: 15),
       ],
     );
