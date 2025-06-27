@@ -5,7 +5,6 @@ import 'package:my_e_commerce_app/core/widgets/card_items.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_search_field.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/home/models/card_items_model.dart';
-import 'package:my_e_commerce_app/screens/home/models/categories_model.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});

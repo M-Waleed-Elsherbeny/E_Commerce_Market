@@ -92,8 +92,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       HeightSpacer(height: 30),
                       CustomButton(
-                        deviceWidth: deviceWidth,
-                        deviceHeight: deviceHeight! * 0.05,
+                        buttonWidth: deviceWidth,
+                        buttonHeight: deviceHeight! * 0.05,
                         textButton: "Sign Up",
                         onPressed: () {},
                       ),
