@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/profile/widgets/custom_profile_button.dart';
 
@@ -13,12 +14,7 @@ class ProfileScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Center(
           heightFactor: 1.5,
-          child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            color: AppColors.kWhiteColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.r),
-            ),
+          child: CustomCardInfo(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
               child: Column(
@@ -45,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   HeightSpacer(height: 20),
                   CustomProfileButton(
-                    textButton: "Edit Profile",
+                    textButton: "Change Name",
                     leftIcon: Icons.edit_rounded,
                     rightIcon: Icons.arrow_forward_ios_rounded,
                     onPressed: () {

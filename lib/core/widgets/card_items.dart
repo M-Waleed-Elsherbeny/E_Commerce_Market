@@ -8,17 +8,31 @@ import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/home/models/card_items_model.dart';
 
 class ProductCardItems extends StatelessWidget {
-  const ProductCardItems({super.key});
+  const ProductCardItems({
+    super.key,
+    this.isShrinkWrap,
+    this.physics,
+    this.onTap,
+  });
+  final bool? isShrinkWrap;
+  final ScrollPhysics? physics;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: CardItemsModel.cardItems.length,
-      itemBuilder: (context, index) {
-        return CardItems(index: index, cardItemsList: CardItemsModel.cardItems);
-      },
+    return GestureDetector(
+      onTap: onTap,
+      child: ListView.builder(
+        shrinkWrap: isShrinkWrap ?? true,
+        physics: physics ?? const NeverScrollableScrollPhysics(),
+        itemCount: CardItemsModel.cardItems.length,
+        itemBuilder: (context, index) {
+          return CardItems(
+            index: index,
+            cardItemsList: CardItemsModel.cardItems,
+          );
+        },
+      ),
     );
   }
 }

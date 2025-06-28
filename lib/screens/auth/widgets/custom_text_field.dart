@@ -3,13 +3,13 @@ import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
-  final Widget? prefixIcon;
+  final Widget? prefixIcon, suffixIcon;
   final bool isPassword;
   const CustomTextFormField({
     super.key,
     required this.labelText,
     this.prefixIcon,
-    this.isPassword = false,
+    this.isPassword = false, this.suffixIcon,
   });
 
   @override
@@ -38,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
                     color: AppColors.kPrimaryColor,
                   ),
                 )
-                : null,
+                : suffixIcon,
         label: Text(
           labelText,
           style: TextStyle(fontSize: 15, color: AppColors.kGreyColor),
