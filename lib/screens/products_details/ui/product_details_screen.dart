@@ -9,6 +9,7 @@ import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
+import 'package:my_e_commerce_app/screens/products_details/widgets/user_comment.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});
@@ -111,6 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 HeightSpacer(height: 10),
+                UserComment(),
               ],
             ),
           ),
@@ -119,3 +121,4 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 }
+
