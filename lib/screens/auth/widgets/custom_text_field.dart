@@ -5,11 +5,14 @@ class CustomTextFormField extends StatelessWidget {
   final String labelText;
   final Widget? prefixIcon, suffixIcon;
   final bool isPassword;
+  final TextEditingController? controller;
   const CustomTextFormField({
     super.key,
     required this.labelText,
     this.prefixIcon,
-    this.isPassword = false, this.suffixIcon,
+    this.isPassword = false,
+    this.suffixIcon,
+    this.controller,
   });
 
   @override
@@ -21,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
         }
         return null;
       },
+      controller: controller,
       keyboardType: TextInputType.emailAddress,
       cursorColor: AppColors.kPrimaryColor,
       obscureText: isPassword,
