@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/database/supabase_config.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes_config.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
