@@ -34,7 +34,16 @@ class AppRoutesConfig {
       case AppRoutes.productDetailsScreen:
         return MaterialPageRoute(builder: (_) => const ProductDetailsScreen());
       default:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(builder: (_) {
+          return Scaffold(
+            body: Center(
+              child: Text(
+                'No route defined for ${settings.name}',
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+          );
+        });
     }
   }
 }

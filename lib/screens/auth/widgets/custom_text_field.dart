@@ -33,16 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         prefixIcon: prefixIcon,
-        suffixIcon:
-            isPassword
-                ? IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.visibility_off_outlined,
-                    color: AppColors.kPrimaryColor,
-                  ),
-                )
-                : suffixIcon,
+        suffixIcon: suffixIcon,
         label: Text(
           labelText,
           style: TextStyle(fontSize: 15, color: AppColors.kGreyColor),

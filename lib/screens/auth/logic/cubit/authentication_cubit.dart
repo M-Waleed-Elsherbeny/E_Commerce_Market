@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,5 +44,35 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       log("Error in catch SignUp: $e");
       emit(SignUpError(e.toString()));
     }
+  }
+
+  GoogleSignInAccount? googleUser;
+  Future<AuthResponse> signInGoogle() async {
+    emit(GoogleSignInLoading());
+    const webClientId =
+        '248205308447-kj4f9l5ivt297845cadauvjdkp54auou.apps.googleusercontent.com';
+    // const iosClientId = 'my-ios.apps.googleusercontent.com';
+
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      // clientId: iosClientId,
+      serverClientId: webClientId,
+    );
+    googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser!.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
+
+    if (accessToken == null || idToken == null) {
+      emit(GoogleSignInError('Google Sign-In failed'));
+      return AuthResponse();
+    }
+
+    AuthResponse response = await initClient.auth.signInWithIdToken(
+      provider: OAuthProvider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+    emit(GoogleSignInSuccess());
+    return response;
   }
 }

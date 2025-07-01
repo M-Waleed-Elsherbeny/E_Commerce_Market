@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
@@ -22,6 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = true;
 
   @override
   void dispose() {
@@ -100,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 right: 20,
                                 top: 20,
                               ),
-                              height: deviceHeight! * 0.5,
+                              height: 400.h,
                               child: Form(
                                 key: formKey,
                                 child: Column(
@@ -134,12 +136,23 @@ class _SignupScreenState extends State<SignupScreen> {
                                     HeightSpacer(height: 10),
                                     CustomTextFormField(
                                       controller: passwordController,
-                                      isPassword: true,
+                                      isPassword: isPasswordVisible,
                                       labelText: "Password",
-                                      prefixIcon: IconButton(
-                                        onPressed: () {},
+                                      prefixIcon: Icon(
+                                        Icons.lock_outline,
+                                        color: AppColors.kPrimaryColor,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isPasswordVisible =
+                                                !isPasswordVisible;
+                                          });
+                                        },
                                         icon: Icon(
-                                          Icons.lock_outline,
+                                          isPasswordVisible
+                                              ? Icons.visibility_off_outlined
+                                              : Icons.visibility_outlined,
                                           color: AppColors.kPrimaryColor,
                                         ),
                                       ),

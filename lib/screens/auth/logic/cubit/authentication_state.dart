@@ -19,3 +19,12 @@ class SignUpError extends AuthenticationState {
   final String errorMessage;
   SignUpError(this.errorMessage);
 }
+
+final class GoogleSignInLoading extends AuthenticationState {}
+
+final class GoogleSignInSuccess extends AuthenticationState {}
+
+final class GoogleSignInError extends AuthenticationState {
+  final String errorMessage;
+  GoogleSignInError(this.errorMessage);
+}

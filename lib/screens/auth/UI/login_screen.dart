@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
@@ -21,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = true;
 
   @override
   void dispose() {
@@ -35,7 +37,18 @@ class _LoginScreenState extends State<LoginScreen> {
     deviceHeight = MediaQuery.of(context).size.height;
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
+        if (state is LoginSuccess || state is GoogleSignInSuccess) {
+          Navigator.pushReplacementNamed(context, AppRoutes.mainNavBar);
+        }
         if (state is LoginError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage),
+              backgroundColor: AppColors.kPrimaryColor,
+            ),
+          );
+        }
+        if (state is GoogleSignInError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.errorMessage),
@@ -48,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         AuthenticationCubit cubit = context.read<AuthenticationCubit>();
         return Scaffold(
           body:
-              state is LoginLoading
+              state is LoginLoading || state is GoogleSignInLoading
                   ? Center(
                     child: CircularProgressIndicator(
                       color: AppColors.kPrimaryColor,
@@ -95,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 right: 20,
                                 top: 20,
                               ),
-                              height: deviceHeight! * 0.45,
+                              height: 375.h,
                               child: Form(
                                 key: formKey,
                                 child: Column(
@@ -118,11 +131,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                     CustomTextFormField(
                                       labelText: "Password",
                                       controller: passwordController,
-                                      isPassword: true,
-                                      prefixIcon: IconButton(
-                                        onPressed: () {},
+                                      isPassword: isPasswordVisible,
+                                      prefixIcon: Icon(
+                                        Icons.lock_outline,
+                                        color: AppColors.kPrimaryColor,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isPasswordVisible =
+                                                !isPasswordVisible;
+                                          });
+                                        },
                                         icon: Icon(
-                                          Icons.lock_outline,
+                                          isPasswordVisible
+                                              ? Icons.visibility_off_outlined
+                                              : Icons.visibility_outlined,
                                           color: AppColors.kPrimaryColor,
                                         ),
                                       ),
@@ -182,6 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     HeightSpacer(height: 10),
                                     CustomLoginMethods(
                                       deviceWidth: deviceWidth,
+                                      onGoogleSignIn: () {
+                                        cubit.signInGoogle();
+                                      },
                                     ),
                                     Spacer(),
                                     Row(
