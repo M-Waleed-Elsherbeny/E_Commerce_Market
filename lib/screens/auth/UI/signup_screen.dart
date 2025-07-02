@@ -195,6 +195,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                     HeightSpacer(height: deviceHeight! * 0.01),
                                     CustomLoginMethods(
                                       deviceWidth: deviceWidth,
+                                      onGoogleSignIn: () async {
+                                        await cubit.signInGoogle();
+                                      },
                                     ),
                                     Spacer(),
                                     Row(

@@ -3,7 +3,13 @@ import 'package:my_e_commerce_app/core/assets/app_assets.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 
 class CustomLoginMethods extends StatelessWidget {
-  const CustomLoginMethods({super.key, required this.deviceWidth, this.onGoogleSignIn, this.onFacebookSignIn, this.onAppleSignIn});
+  const CustomLoginMethods({
+    super.key,
+    required this.deviceWidth,
+    this.onGoogleSignIn,
+    this.onFacebookSignIn,
+    this.onAppleSignIn,
+  });
 
   final double? deviceWidth;
   final VoidCallback? onGoogleSignIn, onFacebookSignIn, onAppleSignIn;
@@ -39,13 +45,17 @@ class CustomLoginMethods extends StatelessWidget {
           onPressed: onFacebookSignIn,
           icon: Icon(
             Icons.facebook_outlined,
-            size: 40,
+            size: 50,
             color: AppColors.kPrimaryColor,
           ),
         ),
         IconButton(
           onPressed: onAppleSignIn,
-          icon: Icon(Icons.apple_outlined, size: 40),
+          icon: Icon(
+            Icons.apple_outlined,
+            size: 50,
+            color: AppColors.kBlackColor,
+          ),
         ),
       ],
     );

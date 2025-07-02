@@ -28,3 +28,12 @@ final class GoogleSignInError extends AuthenticationState {
   final String errorMessage;
   GoogleSignInError(this.errorMessage);
 }
+
+final class LogoutLoading extends AuthenticationState {}
+
+final class LogoutSuccess extends AuthenticationState {}
+
+final class LogoutError extends AuthenticationState {
+  final String errorMessage;
+  LogoutError(this.errorMessage);
+}

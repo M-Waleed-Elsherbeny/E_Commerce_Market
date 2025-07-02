@@ -18,14 +18,13 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+SupabaseClient client = Supabase.instance.client;
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    SupabaseClient client = Supabase.instance.client;
-    log(
-      'Current User: ${client.auth.currentUser!.email ?? 'No user logged in'}',
-    );
+    log('Current User: ${client.auth.currentUser}');
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,

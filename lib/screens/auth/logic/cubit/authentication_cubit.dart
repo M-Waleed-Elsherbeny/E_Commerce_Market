@@ -75,4 +75,18 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(GoogleSignInSuccess());
     return response;
   }
+
+  Future<void> userLogout() async {
+    emit(LogoutLoading());
+    try {
+      await initClient.auth.signOut();
+      emit(LogoutSuccess());
+    } on AuthException catch (e) {
+      log("Error in AuthException Logout: $e");
+      emit(LogoutError(e.message));
+    } catch (e) {
+      log("Error in catch Logout: $e");
+      emit(LogoutError(e.toString()));
+    }
+  }
 }
