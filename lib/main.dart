@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    log('Current User: ${client.auth.currentUser}');
+    log('Current User: ${client.auth.currentUser?.email ?? 'No user logged in'}');
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,

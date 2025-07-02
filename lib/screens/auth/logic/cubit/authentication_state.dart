@@ -37,3 +37,11 @@ final class LogoutError extends AuthenticationState {
   final String errorMessage;
   LogoutError(this.errorMessage);
 }
+
+final class ResetPasswordLoading extends AuthenticationState {}
+
+final class ResetPasswordSuccess extends AuthenticationState {}
+final class ResetPasswordError extends AuthenticationState {
+  final String errorMessage;
+  ResetPasswordError(this.errorMessage);
+}
