@@ -45,3 +45,12 @@ final class ResetPasswordError extends AuthenticationState {
   final String errorMessage;
   ResetPasswordError(this.errorMessage);
 }
+
+final class UserDataAddedLoading extends AuthenticationState {}
+
+final class UserDataAddedSuccess extends AuthenticationState {}
+
+final class UserDataAddedError extends AuthenticationState {
+  final String errorMessage;
+  UserDataAddedError(this.errorMessage);
+}

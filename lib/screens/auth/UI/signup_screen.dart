@@ -39,10 +39,18 @@ class _SignupScreenState extends State<SignupScreen> {
     deviceHeight = MediaQuery.of(context).size.height;
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is SignUpSuccess) {
+        if (state is SignUpSuccess && state is UserDataAddedSuccess) {
           Navigator.pushReplacementNamed(context, AppRoutes.mainNavBar);
         }
         if (state is SignUpError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage),
+              backgroundColor: AppColors.kPrimaryColor,
+            ),
+          );
+        }
+        if (state is UserDataAddedError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.errorMessage),
@@ -55,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
         AuthenticationCubit cubit = context.read<AuthenticationCubit>();
         return Scaffold(
           body:
-              state is SignUpLoading
+              state is SignUpLoading || state is UserDataAddedLoading
                   ? Center(
                     child: CircularProgressIndicator(
                       color: AppColors.kPrimaryColor,
@@ -162,12 +170,16 @@ class _SignupScreenState extends State<SignupScreen> {
                                       buttonWidth: deviceWidth,
                                       buttonHeight: deviceHeight! * 0.05,
                                       textButton: "Sign Up",
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          cubit.userSignUp(
+                                          await cubit.userSignUp(
                                             username: nameController.text,
                                             email: emailController.text,
                                             password: passwordController.text,
+                                          );
+                                          await cubit.addUserToDataBase(
+                                            nameController.text,
+                                            emailController.text,
                                           );
                                         }
                                       },
@@ -197,6 +209,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       deviceWidth: deviceWidth,
                                       onGoogleSignIn: () async {
                                         await cubit.signInGoogle();
+                                        // await cubit.addUserToDataBase(
+                                        //     nameController.text,
+                                        //     emailController.text,
+                                        //   );
                                       },
                                     ),
                                     Spacer(),

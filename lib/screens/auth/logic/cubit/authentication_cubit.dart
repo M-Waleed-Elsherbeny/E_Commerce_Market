@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_e_commerce_app/core/database/database_constants.dart';
+import 'package:my_e_commerce_app/core/database/supabase_config.dart';
+import 'package:my_e_commerce_app/main.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -49,9 +52,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   GoogleSignInAccount? googleUser;
   Future<AuthResponse> signInGoogle() async {
     emit(GoogleSignInLoading());
-    const webClientId =
-        '248205308447-kj4f9l5ivt297845cadauvjdkp54auou.apps.googleusercontent.com';
-    // const iosClientId = 'my-ios.apps.googleusercontent.com';
+    var webClientId = WEB_CLIENT_ID;
 
     final GoogleSignIn googleSignIn = GoogleSignIn(
       // clientId: iosClientId,
@@ -101,6 +102,21 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     } catch (e) {
       log("Error in catch Reset Password: $e");
       emit(ResetPasswordError(e.toString()));
+    }
+  }
+
+  Future<void> addUserToDataBase(String name, String email) async {
+    emit(UserDataAddedLoading());
+    try {
+      final uid = client.auth.currentUser?.id;
+      await client.from(TABLE_NAME).insert({
+        USER_ID: uid,
+        NAME: name,
+        EMAIL: email,
+      });
+      emit(UserDataAddedSuccess());
+    } catch (e) {
+      emit(UserDataAddedError(e.toString()));
     }
   }
 }
