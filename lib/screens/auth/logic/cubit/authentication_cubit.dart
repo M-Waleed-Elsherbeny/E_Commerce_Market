@@ -39,6 +39,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(SignUpLoading());
     try {
       await initClient.auth.signUp(email: email, password: password);
+      await addUserToDataBase(username, email);
       emit(SignUpSuccess());
     } on AuthException catch (e) {
       log("Error in AuthException SignUp: $e");
@@ -52,8 +53,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   GoogleSignInAccount? googleUser;
   Future<AuthResponse> signInGoogle() async {
     emit(GoogleSignInLoading());
+    // var webClientIdWork = WEB_CLIENT_ID_WORK;
     var webClientId = WEB_CLIENT_ID;
-
+  try {
     final GoogleSignIn googleSignIn = GoogleSignIn(
       // clientId: iosClientId,
       serverClientId: webClientId,
@@ -73,8 +75,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       idToken: idToken,
       accessToken: accessToken,
     );
+    await addUserToDataBase(googleUser!.displayName!, googleUser!.email);
     emit(GoogleSignInSuccess());
+    log(response.toString());
     return response;
+  } catch (e) {
+    log(e.toString());
+    emit(GoogleSignInError(e.toString()));
+    return AuthResponse();
+  }
+    
   }
 
   Future<void> userLogout() async {
@@ -108,8 +118,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> addUserToDataBase(String name, String email) async {
     emit(UserDataAddedLoading());
     try {
-      final uid = client.auth.currentUser?.id;
-      await client.from(TABLE_NAME).insert({
+      final uid = client.auth.currentUser!.id;
+      await client.from(TABLE_NAME).upsert({
         USER_ID: uid,
         NAME: name,
         EMAIL: email,
