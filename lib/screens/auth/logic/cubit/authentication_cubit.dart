@@ -5,6 +5,7 @@ import 'package:my_e_commerce_app/core/database/database_constants.dart';
 import 'package:my_e_commerce_app/core/database/supabase_config.dart';
 import 'package:my_e_commerce_app/main.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
+import 'package:my_e_commerce_app/screens/auth/logic/models/user_data_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
@@ -21,6 +22,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         email: email,
         password: password,
       );
+      await getUserData();
       emit(LoginSuccess());
     } on AuthException catch (e) {
       log("Error in AuthException Login: $e");
@@ -40,6 +42,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       await initClient.auth.signUp(email: email, password: password);
       await addUserToDataBase(username, email);
+      await getUserData();
       emit(SignUpSuccess());
     } on AuthException catch (e) {
       log("Error in AuthException SignUp: $e");
@@ -55,36 +58,36 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(GoogleSignInLoading());
     // var webClientIdWork = WEB_CLIENT_ID_WORK;
     var webClientId = WEB_CLIENT_ID;
-  try {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      // clientId: iosClientId,
-      serverClientId: webClientId,
-    );
-    googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        // clientId: iosClientId,
+        serverClientId: webClientId,
+      );
+      googleUser = await googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      final accessToken = googleAuth.accessToken;
+      final idToken = googleAuth.idToken;
 
-    if (accessToken == null || idToken == null) {
-      emit(GoogleSignInError('Google Sign-In failed'));
+      if (accessToken == null || idToken == null) {
+        emit(GoogleSignInError('Google Sign-In failed'));
+        return AuthResponse();
+      }
+
+      AuthResponse response = await initClient.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+      await addUserToDataBase(googleUser!.displayName!, googleUser!.email);
+      await getUserData();
+      emit(GoogleSignInSuccess());
+      log(response.toString());
+      return response;
+    } catch (e) {
+      log(e.toString());
+      emit(GoogleSignInError(e.toString()));
       return AuthResponse();
     }
-
-    AuthResponse response = await initClient.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
-    await addUserToDataBase(googleUser!.displayName!, googleUser!.email);
-    emit(GoogleSignInSuccess());
-    log(response.toString());
-    return response;
-  } catch (e) {
-    log(e.toString());
-    emit(GoogleSignInError(e.toString()));
-    return AuthResponse();
-  }
-    
   }
 
   Future<void> userLogout() async {
@@ -127,6 +130,23 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(UserDataAddedSuccess());
     } catch (e) {
       emit(UserDataAddedError(e.toString()));
+    }
+  }
+
+  UserDataModel? userDataModel;
+  Future<void> getUserData() async {
+    emit(GetUserDataLoading());
+    try {
+      final uid = client.auth.currentUser!.id;
+      List<Map<String, dynamic>> response = await client
+          .from(TABLE_NAME)
+          .select()
+          .eq(USER_ID, uid);
+      log(response.toString());
+      userDataModel = UserDataModel.fromJson(response);
+      emit(GetUserDataSuccess(userDataModel: userDataModel));
+    } catch (e) {
+      emit(GetUserDataError());
     }
   }
 }

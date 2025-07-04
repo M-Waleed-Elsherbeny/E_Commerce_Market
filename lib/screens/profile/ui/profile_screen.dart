@@ -8,7 +8,9 @@ import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
+import 'package:my_e_commerce_app/screens/auth/logic/models/user_data_model.dart';
 import 'package:my_e_commerce_app/screens/profile/widgets/custom_profile_button.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -29,6 +31,8 @@ class ProfileScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        UserDataModel? userData =
+            context.read<AuthenticationCubit>().userDataModel;
         return state is LogoutLoading
             ? Center(
               child: CircularProgressIndicator(color: AppColors.kPrimaryColor),
@@ -53,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           HeightSpacer(height: 10),
                           Text(
-                            "Mohammed Waleed",
+                            userData?.name ?? "User Name",
                             style: TextStyle(
                               fontSize: 18.sp,
                               color: Colors.black,
@@ -62,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           HeightSpacer(height: 5),
                           Text(
-                            "m.elsherbeny100@gmail.com",
+                            userData?.email ?? "email",
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: Colors.black,

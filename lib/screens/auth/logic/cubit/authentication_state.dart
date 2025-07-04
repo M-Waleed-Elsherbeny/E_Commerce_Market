@@ -1,3 +1,5 @@
+import 'package:my_e_commerce_app/screens/auth/logic/models/user_data_model.dart';
+
 abstract class AuthenticationState {}
 
 class AuthenticationInitial extends AuthenticationState {}
@@ -41,6 +43,7 @@ final class LogoutError extends AuthenticationState {
 final class ResetPasswordLoading extends AuthenticationState {}
 
 final class ResetPasswordSuccess extends AuthenticationState {}
+
 final class ResetPasswordError extends AuthenticationState {
   final String errorMessage;
   ResetPasswordError(this.errorMessage);
@@ -54,3 +57,12 @@ final class UserDataAddedError extends AuthenticationState {
   final String errorMessage;
   UserDataAddedError(this.errorMessage);
 }
+
+final class GetUserDataLoading extends AuthenticationState {}
+
+final class GetUserDataSuccess extends AuthenticationState {
+  UserDataModel? userDataModel;
+  GetUserDataSuccess({this.userDataModel});
+}
+
+final class GetUserDataError extends AuthenticationState {}
