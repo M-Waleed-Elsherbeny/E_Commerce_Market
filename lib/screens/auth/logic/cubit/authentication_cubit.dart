@@ -122,10 +122,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(UserDataAddedLoading());
     try {
       final uid = client.auth.currentUser!.id;
-      await client.from(TABLE_NAME).upsert({
-        USER_ID: uid,
-        NAME: name,
-        EMAIL: email,
+      await client.from(USERS_TABLE).upsert({
+        "user_id": uid,
+        "name": name,
+        "email": email,
       });
       emit(UserDataAddedSuccess());
     } catch (e) {
@@ -139,9 +139,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     try {
       final uid = client.auth.currentUser!.id;
       List<Map<String, dynamic>> response = await client
-          .from(TABLE_NAME)
+          .from(USERS_TABLE)
           .select()
-          .eq(USER_ID, uid);
+          .eq("user_id", uid);
       log(response.toString());
       userDataModel = UserDataModel.fromJson(response);
       emit(GetUserDataSuccess(userDataModel: userDataModel));

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/cubit/get_products_cubit.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/core/widgets/width_spacer.dart';
@@ -20,18 +22,23 @@ class ProductCardItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ListView.builder(
-        shrinkWrap: isShrinkWrap ?? true,
-        physics: physics ?? const NeverScrollableScrollPhysics(),
-        itemCount: CardItemsModel.cardItems.length,
-        itemBuilder: (context, index) {
-          return CardItems(
-            index: index,
-            cardItemsList: CardItemsModel.cardItems,
-          );
-        },
+    List products = context.read<GetProductsCubit>().products;
+
+    return BlocProvider(
+      create: (context) => GetProductsCubit()..getProducts(),
+      child: GestureDetector(
+        onTap: onTap,
+        child: ListView.builder(
+          shrinkWrap: isShrinkWrap ?? true,
+          physics: physics ?? const NeverScrollableScrollPhysics(),
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            return CardItems(
+              index: index,
+              cardItemsList: CardItemsModel.cardItems,
+            );
+          },
+        ),
       ),
     );
   }

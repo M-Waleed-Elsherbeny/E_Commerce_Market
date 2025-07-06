@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
   Bloc.observer = MyBlocObserver();
   runApp(MyApp());
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      // table
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return BlocProvider(
