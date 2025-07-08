@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         HeightSpacer(height: 15),
         ProductCardItems(
           onTap: () {
-            Navigator.pushNamed(context, AppRoutes.productDetailsScreen, );
+            Navigator.pushNamed(context, AppRoutes.productDetailsScreen);
           },
         ),
         HeightSpacer(height: 15),

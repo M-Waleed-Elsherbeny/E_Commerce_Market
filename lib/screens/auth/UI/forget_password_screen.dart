@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
@@ -40,11 +41,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         },
         builder: (context, state) {
           return state is ResetPasswordLoading
-              ? Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.kPrimaryColor,
-                ),
-              )
+              ? CustomLoading()
               : SafeArea(
                 child: SingleChildScrollView(
                   child: Column(

@@ -5,6 +5,7 @@ import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
@@ -36,9 +37,7 @@ class ProfileScreen extends StatelessWidget {
           context.read<AuthenticationCubit>().getUserData();
         }
         return state is LogoutLoading || state is GetUserDataLoading
-            ? Center(
-              child: CircularProgressIndicator(color: AppColors.kPrimaryColor),
-            )
+            ? CustomLoading(color: AppColors.kPrimaryColor)
             : SafeArea(
               child: SingleChildScrollView(
                 child: Center(

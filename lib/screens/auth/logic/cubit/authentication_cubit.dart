@@ -81,10 +81,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       await addUserToDataBase(googleUser!.displayName!, googleUser!.email);
       await getUserData();
       emit(GoogleSignInSuccess());
-      log(response.toString());
+      // log(response.toString());
       return response;
     } catch (e) {
-      log(e.toString());
+      // log(e.toString());
       emit(GoogleSignInError(e.toString()));
       return AuthResponse();
     }
@@ -142,7 +142,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           .from(USERS_TABLE)
           .select()
           .eq("user_id", uid);
-      log(response.toString());
+      // log(response.toString());
       userDataModel = UserDataModel.fromJson(response);
       emit(GetUserDataSuccess(userDataModel: userDataModel));
     } catch (e) {

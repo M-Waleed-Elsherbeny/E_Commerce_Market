@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
@@ -39,7 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
-          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.mainNavBar, (route) => false);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.mainNavBar,
+            (route) => false,
+          );
           customSnackBar(
             context,
             state is LoginSuccess
@@ -69,11 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return Scaffold(
           body:
               state is LoginLoading || state is GoogleSignInLoading
-                  ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.kPrimaryColor,
-                    ),
-                  )
+                  ? CustomLoading()
                   : SafeArea(
                     child: SingleChildScrollView(
                       child: Column(

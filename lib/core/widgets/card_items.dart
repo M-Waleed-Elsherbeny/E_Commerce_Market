@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/cubit/get_products_cubit.dart';
+import 'package:my_e_commerce_app/core/models/home_products_model.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/core/widgets/width_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
-import 'package:my_e_commerce_app/screens/home/models/card_items_model.dart';
 
 class ProductCardItems extends StatelessWidget {
   const ProductCardItems({
@@ -22,37 +23,35 @@ class ProductCardItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List products = context.read<GetProductsCubit>().products;
-
-    return BlocProvider(
+    return BlocProvider<GetProductsCubit>(
       create: (context) => GetProductsCubit()..getProducts(),
-      child: GestureDetector(
-        onTap: onTap,
-        child: ListView.builder(
-          shrinkWrap: isShrinkWrap ?? true,
-          physics: physics ?? const NeverScrollableScrollPhysics(),
-          itemCount: products.length,
-          itemBuilder: (context, index) {
-            return CardItems(
-              index: index,
-              cardItemsList: CardItemsModel.cardItems,
-            );
+      child:BlocConsumer<GetProductsCubit, GetProductsState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            List products = context.read<GetProductsCubit>().products;
+            return state is GetProductsLoading
+                ? CustomLoading()
+                : GestureDetector(
+                    onTap: onTap,
+                  child: ListView.builder(
+                    shrinkWrap: isShrinkWrap ?? true,
+                    physics: physics ?? const NeverScrollableScrollPhysics(),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return CardItems(products: products[index]);
+                    },
+                  ),
+                );
           },
-        ),
-      ),
+        ), 
     );
   }
 }
 
 class CardItems extends StatelessWidget {
-  const CardItems({
-    super.key,
-    required this.cardItemsList,
-    required this.index,
-  });
+  const CardItems({super.key, required this.products});
 
-  final List<CardItemsModel> cardItemsList;
-  final int index;
+  final HomeProductsModel products;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,11 @@ class CardItems extends StatelessWidget {
                     bottomLeft: Radius.circular(10.r),
                     bottomRight: Radius.circular(10.r),
                   ),
-                  child: CustomCachedImage(url: cardItemsList[index].urlPath),
+                  child: CustomCachedImage(
+                    url:
+                        products.productImage ??
+                        "https://www.freepik.com/free-vector/no-data-concept-illustration_5928293.htm#fromView=search&page=1&position=17&uuid=c0ce15ec-bf97-450b-a81a-1bc1417ae153&query=no+image+found",
+                  ),
                 ),
                 Container(
                   height: 40.h,
@@ -84,7 +87,7 @@ class CardItems extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    "${cardItemsList[index].discount}% OFF",
+                    "${products.productSale}% OFF",
                     style: TextStyle(
                       color: AppColors.kWhiteColor,
                       fontSize: 17.sp,
@@ -98,7 +101,7 @@ class CardItems extends StatelessWidget {
               children: [
                 WidthSpacer(width: 10),
                 Text(
-                  cardItemsList[index].title,
+                  products.productName ?? "No Name",
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -118,14 +121,14 @@ class CardItems extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "${cardItemsList[index].priceAfter} LE",
+                      "${products.productNewPrice} LE",
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
-                      "${cardItemsList[index].priceBefore} LE",
+                      "${products.productOldPrice} LE",
                       style: TextStyle(
                         fontSize: 15.sp,
                         decoration: TextDecoration.lineThrough,

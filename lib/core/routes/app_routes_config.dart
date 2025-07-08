@@ -24,7 +24,7 @@ class AppRoutesConfig {
           builder:
               (_) => BlocProvider(
                 create: (context) => NavBarCubit(),
-                child: const MainNavBar(),
+                child:  MainNavBar(),
               ),
         );
       case AppRoutes.editProfileScreen:
@@ -34,16 +34,18 @@ class AppRoutesConfig {
       case AppRoutes.productDetailsScreen:
         return MaterialPageRoute(builder: (_) => const ProductDetailsScreen());
       default:
-        return MaterialPageRoute(builder: (_) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                'No route defined for ${settings.name}',
-                style: const TextStyle(fontSize: 20),
+        return MaterialPageRoute(
+          builder: (_) {
+            return Scaffold(
+              body: Center(
+                child: Text(
+                  'No route defined for ${settings.name}',
+                  style: const TextStyle(fontSize: 20),
+                ),
               ),
-            ),
-          );
-        });
+            );
+          },
+        );
     }
   }
 }

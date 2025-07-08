@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,7 +84,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   itemBuilder:
                       (context, _) => Icon(Icons.star, color: Colors.amber),
                   onRatingUpdate: (rating) {
-                    log(rating.toString());
+                    // log(rating.toString());
                   },
                 ),
                 HeightSpacer(height: 10),

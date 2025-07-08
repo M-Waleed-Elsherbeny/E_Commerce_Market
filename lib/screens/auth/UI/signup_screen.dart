@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
+import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
@@ -49,8 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
               backgroundColor: AppColors.kPrimaryColor,
             ),
           );
-        }
-        else if (state is GoogleSignInError) {
+        } else if (state is GoogleSignInError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.errorMessage),
@@ -64,11 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
         return Scaffold(
           body:
               state is SignUpLoading || state is GoogleSignInLoading
-                  ? Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.kPrimaryColor,
-                    ),
-                  )
+                  ? CustomLoading()
                   : SafeArea(
                     child: SingleChildScrollView(
                       child: Column(

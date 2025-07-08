@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    log('Current User: ${client.auth.currentUser?.email ?? 'No user logged in'}');
+    // log('Current User: ${client.auth.currentUser?.email ?? 'No user logged in'}');
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
