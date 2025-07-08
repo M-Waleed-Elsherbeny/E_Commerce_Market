@@ -16,8 +16,7 @@ class CustomCachedImage extends StatelessWidget {
       child: CachedNetworkImage(
         fit: BoxFit.cover,
         imageUrl: url,
-        placeholder:
-            (context, url) => CustomLoading(),
+        placeholder: (context, url) => CustomLoading(),
         errorWidget:
             (context, url, error) =>
                 Icon(Icons.error, color: AppColors.kRedColor),

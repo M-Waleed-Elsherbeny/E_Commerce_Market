@@ -24,7 +24,7 @@ class AppRoutesConfig {
           builder:
               (_) => BlocProvider(
                 create: (context) => NavBarCubit(),
-                child:  MainNavBar(),
+                child: MainNavBar(),
               ),
         );
       case AppRoutes.editProfileScreen:

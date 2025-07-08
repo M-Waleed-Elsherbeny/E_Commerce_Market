@@ -8,7 +8,9 @@ class CustomProfileButton extends StatelessWidget {
     this.buttonWidth,
     this.buttonHeight,
     required this.textButton,
-    this.onPressed, this.leftIcon, this.rightIcon,
+    this.onPressed,
+    this.leftIcon,
+    this.rightIcon,
   });
   final double? buttonWidth, buttonHeight;
   final String textButton;

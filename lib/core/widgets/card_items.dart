@@ -20,30 +20,31 @@ class ProductCardItems extends StatelessWidget {
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
+  // final List<HomeProductsModel>? products;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetProductsCubit>(
       create: (context) => GetProductsCubit()..getProducts(),
-      child:BlocConsumer<GetProductsCubit, GetProductsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            List products = context.read<GetProductsCubit>().products;
-            return state is GetProductsLoading
-                ? CustomLoading()
-                : GestureDetector(
-                    onTap: onTap,
-                  child: ListView.builder(
-                    shrinkWrap: isShrinkWrap ?? true,
-                    physics: physics ?? const NeverScrollableScrollPhysics(),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      return CardItems(products: products[index]);
-                    },
-                  ),
-                );
-          },
-        ), 
+      child: BlocConsumer<GetProductsCubit, GetProductsState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          List<HomeProductsModel> products = context.read<GetProductsCubit>().products;
+          return state is GetProductsLoading
+              ? CustomLoading()
+              : GestureDetector(
+                onTap: onTap,
+                child: ListView.builder(
+                  shrinkWrap: isShrinkWrap ?? true,
+                  physics: physics ?? const NeverScrollableScrollPhysics(),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return CardItems(products: products[index]);
+                  },
+                ),
+              );
+        },
+      ),
     );
   }
 }
