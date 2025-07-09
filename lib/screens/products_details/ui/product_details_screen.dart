@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/core/models/home_products_model.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_app_bar.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
@@ -14,11 +15,15 @@ import 'package:my_e_commerce_app/screens/products_details/logic/models/rate_mod
 import 'package:my_e_commerce_app/screens/products_details/widgets/user_comment.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.productsModel});
+  final HomeProductsModel productsModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildCustomAppBar(context, "Product Name"),
+      appBar: buildCustomAppBar(
+        context,
+        productsModel.productName ?? "Product Name",
+      ),
       body: BlocProvider(
         create:
             (context) =>
@@ -35,6 +40,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   children: [
                     CustomCachedImage(
                       url:
+                          productsModel.productImage ??
                           "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?uid=R162128033&ga=GA1.1.971563098.1745924156&semt=ais_items_boosted&w=740", // Replace with your product image
                     ),
                     HeightSpacer(height: 20),
@@ -46,14 +52,14 @@ class ProductDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Product Name",
+                                productsModel.productName ?? "Product Name",
                                 style: TextStyle(
                                   fontSize: 24.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "\$99.99", // Replace with your product price
+                                "${productsModel.productNewPrice} LE", // Replace with your product price
                                 style: TextStyle(fontSize: 24.sp),
                               ),
                             ],
@@ -83,7 +89,8 @@ class ProductDetailsScreen extends StatelessWidget {
                               height: 150.h,
                               child: Center(
                                 child: Text(
-                                  "Product Description",
+                                  productsModel.productDescription ??
+                                      "Product Description",
                                   style: TextStyle(fontSize: 16.sp),
                                 ),
                               ),

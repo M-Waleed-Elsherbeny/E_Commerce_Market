@@ -6,7 +6,6 @@ import 'package:my_e_commerce_app/screens/auth/ui/login_screen.dart';
 import 'package:my_e_commerce_app/screens/auth/ui/signup_screen.dart';
 import 'package:my_e_commerce_app/screens/navigation/logic/cubit/nav_bar_cubit.dart';
 import 'package:my_e_commerce_app/screens/navigation/ui/main_nav_bar.dart';
-import 'package:my_e_commerce_app/screens/products_details/ui/product_details_screen.dart';
 import 'package:my_e_commerce_app/screens/profile/widgets/edit_profile_view.dart';
 import 'package:my_e_commerce_app/screens/profile/widgets/my_orders_view.dart';
 
@@ -31,8 +30,8 @@ class AppRoutesConfig {
         return MaterialPageRoute(builder: (_) => const EditProfileView());
       case AppRoutes.myOrdersView:
         return MaterialPageRoute(builder: (_) => const MyOrdersView());
-      case AppRoutes.productDetailsScreen:
-        return MaterialPageRoute(builder: (_) => const ProductDetailsScreen());
+      // case AppRoutes.productDetailsScreen:
+      //   return MaterialPageRoute(builder: (_) => const ProductDetailsScreen());
       default:
         return MaterialPageRoute(
           builder: (_) {
