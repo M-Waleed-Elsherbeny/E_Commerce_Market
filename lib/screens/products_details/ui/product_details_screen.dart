@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -30,18 +32,33 @@ class ProductDetailsScreen extends StatelessWidget {
                   productsModel.productId!,
                 ), // Replace with actual product ID
         child: BlocConsumer<GetRateCubit, GetRateState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is AddOrUpdateRateError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Failed to add or update rate."),
+                  backgroundColor: AppColors.kPrimaryColor,
+                ),
+              );
+              if (state is AddOrUpdateRateSuccess) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) =>
+                            ProductDetailsScreen(productsModel: productsModel),
+                  ),
+                );
+              }
+            }
+          },
           builder: (context, state) {
             GetRateCubit rateCubit = context.read<GetRateCubit>();
             return state is GetRateLoading
                 ? CustomLoading()
                 : ListView(
                   children: [
-                    CustomCachedImage(
-                      url:
-                          productsModel.productImage ??
-                          "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?uid=R162128033&ga=GA1.1.971563098.1745924156&semt=ais_items_boosted&w=740", // Replace with your product image
-                    ),
+                    CustomCachedImage(url: productsModel.productImage!),
                     HeightSpacer(height: 20),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -106,7 +123,10 @@ class ProductDetailsScreen extends StatelessWidget {
                                 (context, _) =>
                                     Icon(Icons.star, color: Colors.amber),
                             onRatingUpdate: (rating) {
-                              // log(rating.toString());
+                              rateCubit.addOrUpdateRate(
+                                productId: productsModel.productId!,
+                                rate: rating.toInt(),
+                              );
                             },
                           ),
                           HeightSpacer(height: 10),

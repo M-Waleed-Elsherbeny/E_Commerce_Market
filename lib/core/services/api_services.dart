@@ -15,18 +15,20 @@ class ApiServices {
     }
   }
 
-  Future<Response> postData(String endPoint, Map<String, dynamic> data) async {
+  Future<Response> postData(String endPoint, Map<String, dynamic> data, Map<String, dynamic>? queryParameters,
+  ) async {
     try {
-      final response = await _dio.post(endPoint, data: data);
+      final response = await _dio.post(endPoint, data: data,queryParameters: queryParameters);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<Response> putData(String endPoint, Map<String, dynamic> data) async {
+  Future<Response> putData(String endPoint, Map<String, dynamic> data, Map<String, dynamic>? queryParameters,
+  ) async {
     try {
-      final response = await _dio.patch(endPoint, data: data);
+      final response = await _dio.patch(endPoint, data: data, queryParameters: queryParameters);
       return response;
     } catch (e) {
       rethrow;

@@ -78,14 +78,16 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         idToken: idToken,
         accessToken: accessToken,
       );
+
       await addUserToDataBase(googleUser!.displayName!, googleUser!.email);
       await getUserData();
       emit(GoogleSignInSuccess());
-      // log(response.toString());
       return response;
+    } on AuthException catch (e) {
+      emit(GoogleSignInError("AuthException: ${e.message}"));
+      return AuthResponse();
     } catch (e) {
-      // log(e.toString());
-      emit(GoogleSignInError(e.toString()));
+      emit(GoogleSignInError("Error: $e"));
       return AuthResponse();
     }
   }
