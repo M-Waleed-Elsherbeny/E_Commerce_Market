@@ -11,7 +11,6 @@ import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
 import 'package:my_e_commerce_app/screens/products_details/logic/cubit/get_rate_cubit.dart';
-import 'package:my_e_commerce_app/screens/products_details/logic/models/rate_model.dart';
 import 'package:my_e_commerce_app/screens/products_details/widgets/user_comment.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -28,12 +27,12 @@ class ProductDetailsScreen extends StatelessWidget {
         create:
             (context) =>
                 GetRateCubit()..getRate(
-                  "3f05a659-5e8b-4d3a-a4b7-7405ca2fa662",
+                  productsModel.productId!,
                 ), // Replace with actual product ID
         child: BlocConsumer<GetRateCubit, GetRateState>(
           listener: (context, state) {},
           builder: (context, state) {
-            List<RateModel> rates = context.read<GetRateCubit>().rates;
+            GetRateCubit rateCubit = context.read<GetRateCubit>();
             return state is GetRateLoading
                 ? CustomLoading()
                 : ListView(
@@ -70,7 +69,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  "${rates.first.rate}  ", // Replace with your product price
+                                  "${rateCubit.averageRate} ", // Replace with your product price
                                   style: TextStyle(fontSize: 24.sp),
                                 ),
                                 Icon(Icons.star, color: Colors.amber, size: 30),
@@ -98,7 +97,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                           HeightSpacer(height: 10),
                           RatingBar.builder(
-                            initialRating: rates.first.rate?.toDouble() ?? 0.0,
+                            initialRating: rateCubit.userRates.toDouble(),
                             minRating: 0,
                             direction: Axis.horizontal,
                             itemCount: 5,
