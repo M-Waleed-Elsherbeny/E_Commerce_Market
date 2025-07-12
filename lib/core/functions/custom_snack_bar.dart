@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> customSnackBar(
   BuildContext context,
-  String error, {
-  Color? backgroundColor,
+  String message, {
+  Color? backgroundColor = Colors.green,
 }) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(error),
-      backgroundColor: backgroundColor ?? Colors.green,
+      content: Text(message),
+      backgroundColor: backgroundColor,
     ),
   );
 }

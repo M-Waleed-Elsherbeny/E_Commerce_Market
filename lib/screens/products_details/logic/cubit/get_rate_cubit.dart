@@ -6,8 +6,8 @@ import 'package:my_e_commerce_app/screens/products_details/logic/models/rate_mod
 import 'package:supabase_flutter/supabase_flutter.dart';
 part 'get_rate_state.dart';
 
-class GetRateCubit extends Cubit<GetRateState> {
-  GetRateCubit() : super(GetRateInitial());
+class GetRatesAndCommentsCubit extends Cubit<GetRatesAndCommentsState> {
+  GetRatesAndCommentsCubit() : super(GetRateInitial());
   final ApiServices _apiServices = ApiServices();
   List<RateModel> rates = [];
   int averageRate = 0;
@@ -81,6 +81,17 @@ class GetRateCubit extends Cubit<GetRateState> {
     } catch (e) {
       log('Add Rate Error: $e');
       emit(AddOrUpdateRateError());
+    }
+  }
+
+  Future<void> addComment(Map<String, dynamic> data) async {
+    emit(AddCommentLoading());
+    try {
+      await _apiServices.postData("comments_table", data, {});
+      emit(AddCommentSuccess());
+    } catch (e) {
+      log('Add Comment Error: $e');
+      emit(AddCommentError());
     }
   }
 }
