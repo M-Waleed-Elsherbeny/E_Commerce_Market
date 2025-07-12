@@ -1,3 +1,5 @@
+import 'package:my_e_commerce_app/core/database/database_constants.dart';
+
 HomeProductsModel homeProductsModelFromJson(
   Map<String, dynamic> jsonResponse,
 ) => HomeProductsModel.fromJson(jsonResponse);
@@ -14,6 +16,7 @@ class HomeProductsModel {
   String? productCategory;
   List<FavoriteProductsTable>? favoriteProductsTable;
   List<SoldProducts>? soldProducts;
+  List<UsersComments>? usersComments;
 
   HomeProductsModel({
     this.productId,
@@ -27,6 +30,7 @@ class HomeProductsModel {
     this.productCategory,
     this.favoriteProductsTable,
     this.soldProducts,
+    this.usersComments,
   });
 
   HomeProductsModel.fromJson(Map<String, dynamic> json) {
@@ -39,16 +43,25 @@ class HomeProductsModel {
     productNewPrice = json['product_new_price'];
     productImage = json['product_image'];
     productCategory = json['product_category'];
-    if (json['favorite_products_table'] != null) {
+
+    if (json[FAVORITE_PRODUCTS_TABLE] != null) {
       favoriteProductsTable = <FavoriteProductsTable>[];
-      json['favorite_products_table'].forEach((v) {
+      json[FAVORITE_PRODUCTS_TABLE].forEach((v) {
         favoriteProductsTable!.add(FavoriteProductsTable.fromJson(v));
       });
     }
-    if (json['sold_products'] != null) {
+
+    if (json[SOLD_PRODUCTS_TABLE] != null) {
       soldProducts = <SoldProducts>[];
-      json['sold_products'].forEach((v) {
+      json[SOLD_PRODUCTS_TABLE].forEach((v) {
         soldProducts!.add(SoldProducts.fromJson(v));
+      });
+    }
+
+    if (json[COMMENTS_TABLE] != null) {
+      usersComments = <UsersComments>[];
+      json[COMMENTS_TABLE].forEach((v) {
+        usersComments!.add(UsersComments.fromJson(v));
       });
     }
   }
@@ -118,5 +131,35 @@ class SoldProducts {
     userId = json['user_id'];
     createdAt = json['created_at'];
     productId = json['product_id'];
+  }
+}
+
+class UsersComments {
+  String? createdAt;
+  String? comment;
+  String? userId;
+  String? productId;
+  String? id;
+  String? replay;
+  String? userName;
+
+  UsersComments({
+    this.createdAt,
+    this.comment,
+    this.userId,
+    this.productId,
+    this.id,
+    this.replay,
+    this.userName,
+  });
+
+  UsersComments.fromJson(Map<String, dynamic> json) {
+    createdAt = json['created_at'];
+    comment = json['comment'];
+    userId = json['user_id'];
+    productId = json['product_id'];
+    id = json['id'];
+    replay = json['replay'];
+    userName = json['user_name'];
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/cubit/get_products_cubit.dart';
+import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
@@ -57,12 +58,7 @@ class CardItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailsScreen(productsModel: products),
-          ),
-        );
+        navigationPush(context, ProductDetailsScreen(productsModel: products));
       },
       child: Card(
         color: AppColors.kWhiteColor,

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:my_e_commerce_app/core/database/database_constants.dart';
 import 'package:my_e_commerce_app/core/services/api_services.dart';
 import 'package:my_e_commerce_app/screens/products_details/logic/models/rate_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,14 +69,14 @@ class GetRatesAndCommentsCubit extends Cubit<GetRatesAndCommentsState> {
         "product_id": "eq.$productId",
       };
       if (_isUserRated(productId: productId)) {
-        await _apiServices.putData("rates_table", data, queryParameters);
+        await _apiServices.putData(RATES_TABLE, data, queryParameters);
       } else {
         Map<String, dynamic> postData = {
           "user_id": userId,
           "product_id": productId,
           "rate": rate,
         };
-        await _apiServices.postData("rates_table", postData, queryParameters);
+        await _apiServices.postData(RATES_TABLE, postData, queryParameters);
       }
       emit(AddOrUpdateRateSuccess());
     } catch (e) {
@@ -87,7 +88,7 @@ class GetRatesAndCommentsCubit extends Cubit<GetRatesAndCommentsState> {
   Future<void> addComment(Map<String, dynamic> data) async {
     emit(AddCommentLoading());
     try {
-      await _apiServices.postData("comments_table", data, {});
+      await _apiServices.postData(COMMENTS_TABLE, data, {});
       emit(AddCommentSuccess());
     } catch (e) {
       log('Add Comment Error: $e');

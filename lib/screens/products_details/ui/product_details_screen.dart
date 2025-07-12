@@ -9,7 +9,7 @@ import 'package:my_e_commerce_app/core/widgets/custom_app_bar.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
-import 'package:my_e_commerce_app/core/widgets/custom_navigations.dart';
+import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
@@ -184,7 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ),
                           ),
                           HeightSpacer(height: 10),
-                          UserComment(),
+                          UserComment(productsModel: widget.productsModel,),
                         ],
                       ),
                     ),
