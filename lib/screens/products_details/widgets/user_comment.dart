@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/database/database_constants.dart';
@@ -34,6 +32,7 @@ class UserComment extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          final List<Map<String, dynamic>> data = snapshot.data!;
           return ListView.separated(
             itemBuilder: (context, index) {
               return ListTile(
@@ -42,19 +41,51 @@ class UserComment extends StatelessWidget {
                     "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?uid=R162128033&ga=GA1.1.971563098.1745924156&semt=ais_items_boosted&w=740", // Replace with user profile image
                   ),
                 ),
-                title: Text(
-                  snapshot.data![index]["user_name"],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                  ),
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data[index]["user_name"] ?? "Unknown User",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                    Text(
+                      data[index]["comment"] ?? "No comment",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
                 ),
-                subtitle: Text(
-                  snapshot.data![index]["comment"],
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                  ),
+                subtitle: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    data[index]["replay"] == null
+                        ? Container()
+                        : Text.rich(
+                          TextSpan(
+                            text: "Replay: \n",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: data[index]["replay"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  ],
                 ),
                 trailing: Text(
                   // snapshot.data![index]["created_at"].toString().split(" ")[0],
