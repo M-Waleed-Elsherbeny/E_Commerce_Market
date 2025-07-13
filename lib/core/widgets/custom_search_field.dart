@@ -4,15 +4,17 @@ import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 class CustomSearchField extends StatelessWidget {
   final String labelText;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
   const CustomSearchField({
     super.key,
     required this.labelText,
-    this.suffixIcon,
+    this.suffixIcon, this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       keyboardType: TextInputType.text,
       cursorColor: AppColors.kPrimaryColor,
       style: TextStyle(fontSize: 15, color: AppColors.kGreyColor),

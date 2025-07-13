@@ -9,8 +9,9 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   GetProductsCubit() : super(GetProductsInitial());
   final ApiServices _apiServices = ApiServices();
   List<HomeProductsModel> products = [];
+  List<HomeProductsModel> searchResult = [];
 
-  Future<void> getProducts() async {
+  Future<void> getProducts(String? query) async {
     emit(GetProductsLoading());
     try {
       Response response = await _apiServices.getData(
@@ -20,9 +21,21 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       for (var item in response.data) {
         products.add(homeProductsModelFromJson(item));
       }
+      searchProduct(query);
       emit(GetProductsSuccess());
     } catch (e) {
       emit(GetProductsError(e.toString()));
     }
+  }
+
+  void searchProduct(String? query) {
+    searchResult =
+        products
+            .where(
+              (product) => product.productName!.toLowerCase().contains(
+                query!.toLowerCase(),
+              ),
+            )
+            .toList();
   }
 }

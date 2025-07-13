@@ -17,21 +17,23 @@ class ProductCardItems extends StatelessWidget {
     super.key,
     this.isShrinkWrap,
     this.physics,
-    this.onTap,
+    this.onTap, this.query,
   });
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
+  final String? query;
   // final List<HomeProductsModel>? products;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetProductsCubit>(
-      create: (context) => GetProductsCubit()..getProducts(),
+      create: (context) => GetProductsCubit()..getProducts(query),
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
         listener: (context, state) {},
         builder: (context, state) {
-          List<HomeProductsModel> products =
+        List<HomeProductsModel> products =
+              query != null ? context.read<GetProductsCubit>().searchResult :  
               context.read<GetProductsCubit>().products;
           return state is GetProductsLoading
               ? CustomLoading()
@@ -58,7 +60,10 @@ class CardItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigationPush(context, ProductDetailsScreen(productsModel: products));
+        customPushNavigate(
+          context,
+          ProductDetailsScreen(productsModel: products),
+        );
       },
       child: Card(
         color: AppColors.kWhiteColor,

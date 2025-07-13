@@ -10,7 +10,7 @@ class MyBlocObserver implements BlocObserver {
 
   @override
   void onClose(BlocBase bloc) {
-    log('Bloc: $bloc closed');
+    log('Closed Bloc: $bloc closed');
   }
 
   @override
@@ -25,11 +25,11 @@ class MyBlocObserver implements BlocObserver {
 
   @override
   void onEvent(Bloc bloc, Object? event) {
-    // TODO: implement onEvent
+    log('Bloc: $bloc, Event: $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
-    // TODO: implement onTransition
-  }
+    log('Bloc: $bloc, Transition: $transition');
+    }
 }

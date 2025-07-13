@@ -62,7 +62,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               );
             }
             if (state is AddOrUpdateRateSuccess) {
-              navigateReplacement(context, widget);
+              customReplacementNavigate(context, widget);
             }
           },
           builder: (context, state) {
@@ -163,7 +163,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 });
                                 commentController.clear();
                                 if (context.mounted) {
-                                  navigateReplacement(context, widget);
+                                  customReplacementNavigate(context, widget);
                                 }
                               },
                               icon: Icon(
@@ -184,7 +184,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ),
                           ),
                           HeightSpacer(height: 10),
-                          UserComment(productsModel: widget.productsModel,),
+                          UserComment(productsModel: widget.productsModel),
                         ],
                       ),
                     ),
