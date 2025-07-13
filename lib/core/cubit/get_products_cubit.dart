@@ -4,11 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
 import 'package:my_e_commerce_app/core/services/api_services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 part 'get_products_state.dart';
 
 class GetProductsCubit extends Cubit<GetProductsState> {
   GetProductsCubit() : super(GetProductsInitial());
   final ApiServices _apiServices = ApiServices();
+  final String userId = Supabase.instance.client.auth.currentUser!.id;
   List<HomeProductsModel> products = [];
   List<HomeProductsModel> searchResult = [];
   List<HomeProductsModel> categoriesResult = [];
@@ -43,15 +45,30 @@ class GetProductsCubit extends Cubit<GetProductsState> {
             .toList();
   }
 
-  
   void getProductByCategory(String? category) {
     categoriesResult =
         products
             .where(
-              (product) => product.productCategory!.trim().toLowerCase() ==
+              (product) =>
+                  product.productCategory!.trim().toLowerCase() ==
                   category!.trim().toLowerCase(),
             )
             .toList();
     log(categoriesResult.toString());
+  }
+
+  Future<void> addFavoriteProduct(String productId, bool isFavorite) async {
+    emit(AddToFavoritesLoading());
+    try {
+      await _apiServices.postData("favorite_products_table", {
+        "is_favorite": isFavorite,
+        "user_id": userId,
+        "product_id": productId,
+      }, {});
+      emit(AddToFavoritesSuccess());
+    } catch (e) {
+      log('Add Favorite Product Error: $e');
+      emit(AddToFavoritesError());
+    }
   }
 }
