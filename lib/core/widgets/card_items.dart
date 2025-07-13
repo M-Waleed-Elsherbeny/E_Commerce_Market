@@ -17,24 +17,29 @@ class ProductCardItems extends StatelessWidget {
     super.key,
     this.isShrinkWrap,
     this.physics,
-    this.onTap, this.query,
+    this.onTap,
+    this.query,
+    this.category,
   });
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
-  final String? query;
+  final String? query, category;
   // final List<HomeProductsModel>? products;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetProductsCubit>(
-      create: (context) => GetProductsCubit()..getProducts(query),
+      create: (context) => GetProductsCubit()..getProducts(query, category),
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
         listener: (context, state) {},
         builder: (context, state) {
-        List<HomeProductsModel> products =
-              query != null ? context.read<GetProductsCubit>().searchResult :  
-              context.read<GetProductsCubit>().products;
+          List<HomeProductsModel> products =
+              query != null
+                  ? context.read<GetProductsCubit>().searchResult
+                  : category != null
+                  ? context.read<GetProductsCubit>().categoriesResult
+                  : context.read<GetProductsCubit>().products;
           return state is GetProductsLoading
               ? CustomLoading()
               : ListView.builder(

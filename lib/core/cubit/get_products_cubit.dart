@@ -1,4 +1,5 @@
-// import 'dart:developer';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
@@ -10,8 +11,9 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   final ApiServices _apiServices = ApiServices();
   List<HomeProductsModel> products = [];
   List<HomeProductsModel> searchResult = [];
+  List<HomeProductsModel> categoriesResult = [];
 
-  Future<void> getProducts(String? query) async {
+  Future<void> getProducts(String? query, String? category) async {
     emit(GetProductsLoading());
     try {
       Response response = await _apiServices.getData(
@@ -21,9 +23,11 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       for (var item in response.data) {
         products.add(homeProductsModelFromJson(item));
       }
-      searchProduct(query);
+      searchProduct(query ?? "");
+      getProductByCategory(category ?? "");
       emit(GetProductsSuccess());
     } catch (e) {
+      log('Get Products Error: $e');
       emit(GetProductsError(e.toString()));
     }
   }
@@ -37,5 +41,17 @@ class GetProductsCubit extends Cubit<GetProductsState> {
               ),
             )
             .toList();
+  }
+
+  
+  void getProductByCategory(String? category) {
+    categoriesResult =
+        products
+            .where(
+              (product) => product.productCategory!.trim().toLowerCase() ==
+                  category!.trim().toLowerCase(),
+            )
+            .toList();
+    log(categoriesResult.toString());
   }
 }
