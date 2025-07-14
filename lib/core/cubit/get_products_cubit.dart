@@ -54,21 +54,42 @@ class GetProductsCubit extends Cubit<GetProductsState> {
                   category!.trim().toLowerCase(),
             )
             .toList();
-    log(categoriesResult.toString());
+    // log(categoriesResult.toString());
   }
 
-  Future<void> addFavoriteProduct(String productId, bool isFavorite) async {
+  Map<String, bool> favoriteProducts = {};
+  Future<void> addFavoriteProduct(String productId) async {
     emit(AddToFavoritesLoading());
     try {
       await _apiServices.postData("favorite_products_table", {
-        "is_favorite": isFavorite,
+        "is_favorite": true,
         "user_id": userId,
         "product_id": productId,
       }, {});
+      favoriteProducts[productId] = true;
+      log(favoriteProducts.toString());
       emit(AddToFavoritesSuccess());
     } catch (e) {
       log('Add Favorite Product Error: $e');
       emit(AddToFavoritesError());
+    }
+  }
+
+  bool checkIsFavorite(String productId) {
+    return favoriteProducts.containsKey(productId);
+  }
+
+  Future<void> deleteFavoriteProduct(String productId) async {
+    emit(RemoveFavoriteProductLoading());
+    try {
+      await _apiServices.deleteData(
+        "favorite_products_table?user_id=eq.$userId&product_id=eq.$productId",
+      );
+      favoriteProducts.remove(productId);
+      emit(RemoveFavoriteProductSuccess());
+    } catch (e) {
+      log('Delete Favorite Product Error: $e');
+      emit(RemoveFavoriteProductError());
     }
   }
 }

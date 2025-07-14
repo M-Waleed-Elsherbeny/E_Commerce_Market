@@ -20,8 +20,8 @@ final class AddToFavoritesSuccess extends GetProductsState {}
 
 final class AddToFavoritesError extends GetProductsState {}
 
-final class RemoveFromFavoritesLoading extends GetProductsState {}
+final class RemoveFavoriteProductLoading extends GetProductsState {}
 
-final class RemoveFromFavoritesSuccess extends GetProductsState {}
+final class RemoveFavoriteProductSuccess extends GetProductsState {}
 
-final class RemoveFromFavoritesError extends GetProductsState {}
+final class RemoveFavoriteProductError extends GetProductsState {}

@@ -34,12 +34,13 @@ class ProductCardItems extends StatelessWidget {
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
         listener: (context, state) {},
         builder: (context, state) {
+          GetProductsCubit getProductsCubit = context.read<GetProductsCubit>();
           List<HomeProductsModel> products =
               query != null
-                  ? context.read<GetProductsCubit>().searchResult
+                  ? getProductsCubit.searchResult
                   : category != null
-                  ? context.read<GetProductsCubit>().categoriesResult
-                  : context.read<GetProductsCubit>().products;
+                  ? getProductsCubit.categoriesResult
+                  : getProductsCubit.products;
           return state is GetProductsLoading
               ? CustomLoading()
               : ListView.builder(
@@ -47,7 +48,18 @@ class ProductCardItems extends StatelessWidget {
                 physics: physics ?? const NeverScrollableScrollPhysics(),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
-                  return CardItems(products: products[index]);
+                  bool isFavorite = getProductsCubit.checkIsFavorite(
+                    products[index].productId!,
+                  );
+                  return CardItems(
+                    products: products[index],
+                    isFavorite: isFavorite,
+                    onTap: () {
+                      isFavorite ? getProductsCubit.deleteFavoriteProduct(products[index].productId!) :  getProductsCubit.addFavoriteProduct(
+                        products[index].productId!,
+                      );
+                    },
+                  );
                 },
               );
         },
@@ -57,9 +69,16 @@ class ProductCardItems extends StatelessWidget {
 }
 
 class CardItems extends StatelessWidget {
-  const CardItems({super.key, required this.products});
+  const CardItems({
+    super.key,
+    required this.products,
+    this.onTap,
+    required this.isFavorite,
+  });
 
   final HomeProductsModel products;
+  final VoidCallback? onTap;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +143,15 @@ class CardItems extends StatelessWidget {
                   ),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.favorite_border_outlined, size: 25.sp),
+                    onPressed: onTap,
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 25.sp,
+                      color:
+                          isFavorite
+                              ? AppColors.kPrimaryColor
+                              : AppColors.kGreyColor,
+                    ),
                   ),
                   WidthSpacer(width: 10),
                 ],
