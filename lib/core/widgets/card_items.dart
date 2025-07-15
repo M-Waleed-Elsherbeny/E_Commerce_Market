@@ -19,18 +19,21 @@ class ProductCardItems extends StatelessWidget {
     this.physics,
     this.onTap,
     this.query,
-    this.category, this.favoriteProducts,
+    this.category,
+    this.isFavoriteScreen = false,
   });
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
   final String? query, category;
-  final List<HomeProductsModel>? favoriteProducts;
+  final bool isFavoriteScreen;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetProductsCubit>(
-      create: (context) => GetProductsCubit()..getProducts(query, category),
+      create:
+          (context) =>
+              GetProductsCubit()..getProducts(query: query, category: category),
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -40,6 +43,8 @@ class ProductCardItems extends StatelessWidget {
                   ? getProductsCubit.searchResult
                   : category != null
                   ? getProductsCubit.categoriesResult
+                  : isFavoriteScreen
+                  ? getProductsCubit.favoriteProducts
                   : getProductsCubit.products;
           return state is GetProductsLoading
               ? CustomLoading()

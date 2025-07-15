@@ -16,8 +16,12 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   List<HomeProductsModel> categoriesResult = [];
   List<HomeProductsModel> favoriteProducts = [];
 
-  Future<void> getProducts(String? query, String? category) async {
+  Future<void> getProducts({String? query, String? category}) async {
     emit(GetProductsLoading());
+    products = [];
+    favoriteProducts = [];
+    searchResult = [];
+    categoriesResult = [];
     try {
       Response response = await _apiServices.getData(
         "products_table?select=*,favorite_products_table(*,users(*)),sold_products(*)",
@@ -70,6 +74,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       }, {});
       hasFavoriteProducts[productId] = true;
       log(hasFavoriteProducts.toString());
+      await getProducts();
       emit(AddToFavoritesSuccess());
     } catch (e) {
       log('Add Favorite Product Error: $e');
@@ -88,6 +93,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
         "favorite_products_table?user_id=eq.$userId&product_id=eq.$productId",
       );
       hasFavoriteProducts.remove(productId);
+      await getProducts();
       emit(RemoveFavoriteProductSuccess());
     } catch (e) {
       log('Delete Favorite Product Error: $e');
@@ -100,14 +106,13 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       if (product.favoriteProductsTable!.isEmpty ||
           product.favoriteProductsTable != null) {
         for (var favorite in product.favoriteProductsTable!) {
-          if(favorite.userId == userId){
-          favoriteProducts.add(product);
-          hasFavoriteProducts[product.productId!] = true;
-          log(favoriteProducts.first.productName!);
+          if (favorite.userId == userId) {
+            favoriteProducts.add(product);
+            hasFavoriteProducts[product.productId!] = true;
+            log(favoriteProducts.first.productName!);
           }
         }
       }
     }
-
   }
 }
