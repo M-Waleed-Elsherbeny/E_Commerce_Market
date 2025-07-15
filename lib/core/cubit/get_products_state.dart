@@ -6,12 +6,22 @@ final class GetProductsInitial extends GetProductsState {}
 
 final class GetProductsLoading extends GetProductsState {}
 
-final class GetProductsSuccess extends GetProductsState {
-  GetProductsSuccess();
-}
+final class GetProductsSuccess extends GetProductsState {}
 
 final class GetProductsError extends GetProductsState {
   final String message;
 
   GetProductsError(this.message);
 }
+
+final class AddToFavoritesLoading extends GetProductsState {}
+
+final class AddToFavoritesSuccess extends GetProductsState {}
+
+final class AddToFavoritesError extends GetProductsState {}
+
+final class RemoveFavoriteProductLoading extends GetProductsState {}
+
+final class RemoveFavoriteProductSuccess extends GetProductsState {}
+
+final class RemoveFavoriteProductError extends GetProductsState {}

@@ -24,61 +24,72 @@ class MainNavBar extends StatelessWidget {
       child: BlocBuilder<NavBarCubit, NavBarState>(
         builder: (context, state) {
           NavBarCubit cubit = context.read<NavBarCubit>();
-          return Scaffold(
-            bottomNavigationBar: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(color: AppColors.kWhiteColor),
-              child: Padding(
+          return GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+              bottomNavigationBar: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(color: AppColors.kWhiteColor),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 15,
+                  ),
+                  child: GNav(
+                    hoverColor:
+                        AppColors.kPrimaryColor, // tab button hover color
+                    curve: Curves.easeInOut, // tab animation curves
+                    duration: Duration(
+                      milliseconds: 200,
+                    ), // tab animation duration
+                    gap: 10, // the tab button gap between icon and text
+                    color: AppColors.kGreyColor, // unselected icon color
+                    activeColor:
+                        AppColors.kYellowColor, // selected icon and text color
+                    iconSize: 30, // tab button icon size
+                    tabBackgroundColor:
+                        AppColors
+                            .kPrimaryColor, // selected tab background color
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
+                    ), // navigation bar padding
+                    tabs: [
+                      GButton(icon: Icons.home_outlined, text: 'Home'),
+                      GButton(
+                        icon: Icons.store_mall_directory_outlined,
+                        text: 'Store',
+                      ),
+                      GButton(
+                        icon: Icons.favorite_border_rounded,
+                        text: 'Favorites',
+                      ),
+                      GButton(
+                        icon: Icons.shopping_basket_outlined,
+                        text: 'Cart',
+                      ),
+                      GButton(
+                        icon: Icons.person_outline_rounded,
+                        text: 'Profile',
+                      ),
+                    ],
+                    onTabChange: (index) {
+                      cubit.changeIndex(index);
+                    },
+                  ),
+                ),
+              ),
+              body: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 15,
                 ),
-                child: GNav(
-                  hoverColor: AppColors.kPrimaryColor, // tab button hover color
-                  curve: Curves.easeInOut, // tab animation curves
-                  duration: Duration(
-                    milliseconds: 200,
-                  ), // tab animation duration
-                  gap: 10, // the tab button gap between icon and text
-                  color: AppColors.kGreyColor, // unselected icon color
-                  activeColor:
-                      AppColors.kYellowColor, // selected icon and text color
-                  iconSize: 30, // tab button icon size
-                  tabBackgroundColor:
-                      AppColors.kPrimaryColor, // selected tab background color
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ), // navigation bar padding
-                  tabs: [
-                    GButton(icon: Icons.home_outlined, text: 'Home'),
-                    GButton(
-                      icon: Icons.store_mall_directory_outlined,
-                      text: 'Store',
-                    ),
-                    GButton(
-                      icon: Icons.favorite_border_rounded,
-                      text: 'Favorites',
-                    ),
-                    GButton(icon: Icons.shopping_basket_outlined, text: 'Cart'),
-                    GButton(
-                      icon: Icons.person_outline_rounded,
-                      text: 'Profile',
-                    ),
-                  ],
-                  onTabChange: (index) {
-                    cubit.changeIndex(index);
-                  },
+                child: IndexedStack(
+                  index:
+                      cubit
+                          .currentIndex, // This index will be updated based on the selected tab
+                  children: _screens,
                 ),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: IndexedStack(
-                index:
-                    cubit
-                        .currentIndex, // This index will be updated based on the selected tab
-                children: _screens,
               ),
             ),
           );

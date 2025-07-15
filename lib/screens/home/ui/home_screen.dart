@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.only(top: 10.w),
       children: [
         CustomSearchField(
           controller: searchController,
@@ -35,7 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
             tooltip: "Search",
             icon: Icon(Icons.search, color: AppColors.kWhiteColor, size: 40),
             onPressed: () {
-              customPushNavigate(context, SearchView(query: searchController.text,));
+              customPushNavigate(
+                context,
+                SearchView(
+                  query: searchController.text,
+                ),
+              );
             },
           ),
         ),
@@ -67,5 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
         HeightSpacer(height: 15),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 }

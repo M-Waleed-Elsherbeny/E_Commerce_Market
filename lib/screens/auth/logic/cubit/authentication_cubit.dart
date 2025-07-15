@@ -148,6 +148,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       userDataModel = UserDataModel.fromJson(response);
       emit(GetUserDataSuccess(userDataModel: userDataModel));
     } catch (e) {
+      log('Get User Data Error: $e');
       emit(GetUserDataError());
     }
   }
