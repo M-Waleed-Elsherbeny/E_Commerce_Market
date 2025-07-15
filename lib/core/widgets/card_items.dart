@@ -19,13 +19,13 @@ class ProductCardItems extends StatelessWidget {
     this.physics,
     this.onTap,
     this.query,
-    this.category,
+    this.category, this.favoriteProducts,
   });
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
   final String? query, category;
-  // final List<HomeProductsModel>? products;
+  final List<HomeProductsModel>? favoriteProducts;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,13 @@ class ProductCardItems extends StatelessWidget {
                     products: products[index],
                     isFavorite: isFavorite,
                     onTap: () {
-                      isFavorite ? getProductsCubit.deleteFavoriteProduct(products[index].productId!) :  getProductsCubit.addFavoriteProduct(
-                        products[index].productId!,
-                      );
+                      isFavorite
+                          ? getProductsCubit.deleteFavoriteProduct(
+                            products[index].productId!,
+                          )
+                          : getProductsCubit.addFavoriteProduct(
+                            products[index].productId!,
+                          );
                     },
                   );
                 },

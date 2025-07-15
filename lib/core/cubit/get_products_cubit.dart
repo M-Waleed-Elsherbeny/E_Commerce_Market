@@ -14,6 +14,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   List<HomeProductsModel> products = [];
   List<HomeProductsModel> searchResult = [];
   List<HomeProductsModel> categoriesResult = [];
+  List<HomeProductsModel> favoriteProducts = [];
 
   Future<void> getProducts(String? query, String? category) async {
     emit(GetProductsLoading());
@@ -27,6 +28,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       }
       searchProduct(query ?? "");
       getProductByCategory(category ?? "");
+      getFavoriteProducts();
       emit(GetProductsSuccess());
     } catch (e) {
       log('Get Products Error: $e');
@@ -57,7 +59,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
     // log(categoriesResult.toString());
   }
 
-  Map<String, bool> favoriteProducts = {};
+  Map<String, bool> hasFavoriteProducts = {};
   Future<void> addFavoriteProduct(String productId) async {
     emit(AddToFavoritesLoading());
     try {
@@ -66,8 +68,8 @@ class GetProductsCubit extends Cubit<GetProductsState> {
         "user_id": userId,
         "product_id": productId,
       }, {});
-      favoriteProducts[productId] = true;
-      log(favoriteProducts.toString());
+      hasFavoriteProducts[productId] = true;
+      log(hasFavoriteProducts.toString());
       emit(AddToFavoritesSuccess());
     } catch (e) {
       log('Add Favorite Product Error: $e');
@@ -76,7 +78,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   }
 
   bool checkIsFavorite(String productId) {
-    return favoriteProducts.containsKey(productId);
+    return hasFavoriteProducts.containsKey(productId);
   }
 
   Future<void> deleteFavoriteProduct(String productId) async {
@@ -85,11 +87,27 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       await _apiServices.deleteData(
         "favorite_products_table?user_id=eq.$userId&product_id=eq.$productId",
       );
-      favoriteProducts.remove(productId);
+      hasFavoriteProducts.remove(productId);
       emit(RemoveFavoriteProductSuccess());
     } catch (e) {
       log('Delete Favorite Product Error: $e');
       emit(RemoveFavoriteProductError());
     }
+  }
+
+  void getFavoriteProducts() {
+    for (HomeProductsModel product in products) {
+      if (product.favoriteProductsTable!.isEmpty ||
+          product.favoriteProductsTable != null) {
+        for (var favorite in product.favoriteProductsTable!) {
+          if(favorite.userId == userId){
+          favoriteProducts.add(product);
+          hasFavoriteProducts[product.productId!] = true;
+          log(favoriteProducts.first.productName!);
+          }
+        }
+      }
+    }
+
   }
 }
