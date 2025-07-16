@@ -6,6 +6,7 @@ AppBar buildCustomAppBar(BuildContext context, String title) {
   return AppBar(
     backgroundColor: AppColors.kPrimaryColor,
     centerTitle: true,
+    
     title: Text(title),
     titleTextStyle: TextStyle(
       fontSize: 20.sp,
@@ -13,7 +14,11 @@ AppBar buildCustomAppBar(BuildContext context, String title) {
       fontWeight: FontWeight.bold,
     ),
     leading: IconButton(
-      onPressed: () => Navigator.pop(context),
+      onPressed: () {
+        if(Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+      },
       icon: const Icon(Icons.arrow_back_ios),
       color: AppColors.kWhiteColor,
     ),

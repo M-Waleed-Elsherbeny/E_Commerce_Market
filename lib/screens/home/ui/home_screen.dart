@@ -20,58 +20,59 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.only(top: 10.w),
-      children: [
-        CustomSearchField(
-          controller: searchController,
-          labelText: 'Search In Store...',
-          suffixIcon: IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.kPrimaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      child: ListView(
+        padding: EdgeInsets.only(top: 10.w),
+        children: [
+          CustomSearchField(
+            controller: searchController,
+            labelText: 'Search In Store...',
+            suffixIcon: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: AppColors.kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              tooltip: "Search",
+              icon: Icon(Icons.search, color: AppColors.kWhiteColor, size: 40),
+              onPressed: () {
+                customPushNavigate(
+                  context,
+                  SearchView(query: searchController.text),
+                );
+              },
+            ),
+          ),
+          Container(
+            height: 200.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppAssets.imageStore2),
+                fit: BoxFit.fitHeight,
+                alignment: Alignment.center,
               ),
             ),
-            tooltip: "Search",
-            icon: Icon(Icons.search, color: AppColors.kWhiteColor, size: 40),
-            onPressed: () {
-              customPushNavigate(
-                context,
-                SearchView(
-                  query: searchController.text,
-                ),
-              );
-            },
           ),
-        ),
-        Container(
-          height: 200.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppAssets.imageStore2),
-              fit: BoxFit.fitHeight,
-              alignment: Alignment.center,
-            ),
+          HeightSpacer(height: 15),
+          Text(
+            "Popular Categories",
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
-        ),
-        HeightSpacer(height: 15),
-        Text(
-          "Popular Categories",
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-        ),
-        HeightSpacer(height: 10),
-        CategoriesItems(),
-        HeightSpacer(height: 15),
-        Text(
-          "Recently Products",
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-        ),
-        HeightSpacer(height: 15),
-        ProductCardItems(),
-        HeightSpacer(height: 15),
-      ],
+          HeightSpacer(height: 10),
+          CategoriesItems(),
+          HeightSpacer(height: 15),
+          Text(
+            "Recently Products",
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+          ),
+          HeightSpacer(height: 15),
+          ProductCardItems(),
+          HeightSpacer(height: 15),
+        ],
+      ),
     );
   }
 

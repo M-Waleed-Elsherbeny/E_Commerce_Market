@@ -9,32 +9,35 @@ class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Center(
-          child: Text(
-            "Welcome to Store",
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-          ),
-        ),
-        CustomSearchField(
-          labelText: 'Search In Store...',
-          suffixIcon: IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.kPrimaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      child: ListView(
+        children: [
+          Center(
+            child: Text(
+              "Welcome to Store",
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
             ),
-            tooltip: "Search",
-            icon: Icon(Icons.search, color: AppColors.kWhiteColor, size: 40),
-            onPressed: () {},
           ),
-        ),
-        HeightSpacer(height: 10),
-        ProductCardItems(),
-        HeightSpacer(height: 15),
-      ],
+          CustomSearchField(
+            labelText: 'Search In Store...',
+            suffixIcon: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: AppColors.kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              tooltip: "Search",
+              icon: Icon(Icons.search, color: AppColors.kWhiteColor, size: 40),
+              onPressed: () {},
+            ),
+          ),
+          HeightSpacer(height: 10),
+          ProductCardItems(),
+          HeightSpacer(height: 15),
+        ],
+      ),
     );
   }
 }

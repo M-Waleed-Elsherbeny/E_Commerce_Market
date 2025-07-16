@@ -146,6 +146,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           .eq("user_id", uid);
       // log(response.toString());
       userDataModel = UserDataModel.fromJson(response);
+      log(userDataModel!.email);
       emit(GetUserDataSuccess(userDataModel: userDataModel));
     } catch (e) {
       log('Get User Data Error: $e');
