@@ -6,6 +6,7 @@ import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/widgets/card_items.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_search_field.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
+import 'package:my_e_commerce_app/screens/home/logic/payment_initialize.dart';
 import 'package:my_e_commerce_app/screens/home/ui/search_view.dart';
 import 'package:my_e_commerce_app/screens/home/widgets/categories_items.dart';
 
@@ -18,6 +19,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
+  @override
+  void initState() {
+    PaymentInitialize.paymentInit();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(

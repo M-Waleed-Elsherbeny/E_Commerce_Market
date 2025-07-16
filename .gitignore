@@ -46,3 +46,5 @@ app.*.map.json
 
 # ignore database Folder
 /lib/core/database/
+# ignore Payment Folder
+lib/core/paymob_payment

@@ -11,10 +11,10 @@ class FavoriteScreen extends StatelessWidget {
       appBar: buildCustomAppBar(context, "favorite"),
       body: ListView(
         children: [
-          HeightSpacer(height: 10), 
-          ProductCardItems(
-        isFavoriteScreen: true,
-      )]),
+          HeightSpacer(height: 10),
+          ProductCardItems(isFavoriteScreen: true),
+        ],
+      ),
     );
   }
 }

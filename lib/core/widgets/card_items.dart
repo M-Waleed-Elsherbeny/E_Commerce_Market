@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +13,7 @@ import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/core/widgets/width_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
 import 'package:my_e_commerce_app/screens/products_details/ui/product_details_screen.dart';
+import 'package:pay_with_paymob/pay_with_paymob.dart';
 
 class ProductCardItems extends StatelessWidget {
   const ProductCardItems({
@@ -188,7 +191,28 @@ class CardItems extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  CustomButton(textButton: "Buy Now", onPressed: () {}),
+                  CustomButton(
+                    textButton: "Buy Now",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => PaymentView(
+                                onPaymentSuccess: () {
+                                  log("Payment Success");
+                                },
+                                onPaymentError: () {
+                                  log("Payment Failure");
+                                },
+                                price: double.parse(
+                                  products.productNewPrice!,
+                                ), // Required: Total price (e.g., 100 for 100 EGP)
+                              ),
+                        ),
+                      );
+                    },
+                  ),
                   WidthSpacer(width: 10),
                 ],
               ),
