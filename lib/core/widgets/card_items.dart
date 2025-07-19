@@ -96,10 +96,7 @@ class CardItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go(
-          AppRoutes.productDetailsScreen,
-          extra: products,
-        );
+        context.push(AppRoutes.productDetailsScreen, extra: products);
       },
       child: Card(
         color: AppColors.kWhiteColor,
