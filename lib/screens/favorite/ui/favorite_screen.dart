@@ -8,7 +8,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildCustomAppBar(context, "favorite"),
+      appBar: buildCustomAppBar(context, "Favorites Products", canPop: false),
       body: ListView(
         children: [
           HeightSpacer(height: 10),

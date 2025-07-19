@@ -115,7 +115,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
           }
         }
       }
-      log(favoriteProducts.first.productName!);
+      // log(favoriteProducts.first.productName!);
     }
   }
 }

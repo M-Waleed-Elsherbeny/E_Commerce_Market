@@ -3,7 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 
-AppBar buildCustomAppBar(BuildContext context, String title) {
+AppBar buildCustomAppBar(
+  BuildContext context,
+  String title, {
+  bool canPop = true,
+}) {
   return AppBar(
     backgroundColor: AppColors.kPrimaryColor,
     centerTitle: true,
@@ -15,7 +19,7 @@ AppBar buildCustomAppBar(BuildContext context, String title) {
       fontWeight: FontWeight.bold,
     ),
     leading:
-        context.canPop()
+        canPop
             ? IconButton(
               onPressed: () {
                 context.pop(context);
@@ -23,7 +27,7 @@ AppBar buildCustomAppBar(BuildContext context, String title) {
               icon: const Icon(Icons.arrow_back_ios),
               color: AppColors.kWhiteColor,
             )
-            : null,
+            : Container(),
     toolbarHeight: 50.h,
   );
 }
