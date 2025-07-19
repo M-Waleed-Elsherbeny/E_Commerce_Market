@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
@@ -19,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is LogoutSuccess) {
-          Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+          context.pushReplacementNamed(AppRoutes.loginScreen);
           customSnackBar(context, "Logout successful");
         }
         if (state is LogoutError) {
@@ -79,8 +80,7 @@ class ProfileScreen extends StatelessWidget {
                             leftIcon: Icons.edit_rounded,
                             rightIcon: Icons.arrow_forward_ios_rounded,
                             onPressed: () {
-                              Navigator.pushNamed(
-                                context,
+                              context.pushNamed(
                                 AppRoutes.editProfileScreen,
                               );
                             },
@@ -91,8 +91,7 @@ class ProfileScreen extends StatelessWidget {
                             leftIcon: Icons.shopping_bag_rounded,
                             rightIcon: Icons.arrow_forward_ios_rounded,
                             onPressed: () {
-                              Navigator.pushNamed(
-                                context,
+                              context.pushNamed(
                                 AppRoutes.myOrdersView,
                               );
                             },

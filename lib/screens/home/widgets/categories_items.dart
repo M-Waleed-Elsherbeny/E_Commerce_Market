@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
-import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/home/models/categories_model.dart';
 import 'package:my_e_commerce_app/screens/home/ui/category_filter_view.dart';
@@ -25,7 +24,9 @@ class CategoriesItems extends StatelessWidget {
               onTap: () {
                 String categoryName = CategoriesModel.getCategories[index].categoryName;
                 log(categoryName);
-                customPushNavigate(context, CategoryFilterView(categoryName: categoryName));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => CategoryFilterView(categoryName: categoryName),
+                ));
               },
               child: Column(
                 children: [

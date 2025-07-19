@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
@@ -41,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is SignUpSuccess || state is GoogleSignInSuccess) {
-          Navigator.pushReplacementNamed(context, AppRoutes.mainNavBar);
+          context.pushReplacementNamed(AppRoutes.mainNavBar);
         }
         if (state is SignUpError) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -211,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         Text("Already have an account?"),
                                         TextButton(
                                           onPressed: () {
-                                            Navigator.pop(context);
+                                            context.pop();
                                           },
                                           child: Text(
                                             "Login",

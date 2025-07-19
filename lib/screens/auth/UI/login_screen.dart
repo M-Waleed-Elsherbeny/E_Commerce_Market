@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
@@ -40,10 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
+          context.pushReplacementNamed(
             AppRoutes.mainNavBar,
-            (route) => false,
           );
           customSnackBar(
             context,
@@ -163,8 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       alignment: Alignment.centerRight,
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.pushNamed(
-                                            context,
+                                          context.push(
                                             AppRoutes.forgetPasswordScreen,
                                           );
                                         },
@@ -226,8 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Text("Don't have an account?"),
                                         TextButton(
                                           onPressed: () {
-                                            Navigator.pushNamed(
-                                              context,
+                                            context.pushNamed(
                                               AppRoutes.registerScreen,
                                             );
                                           },

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
+import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_app_bar.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_card_info.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
-import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_text_field.dart';
@@ -62,7 +63,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               );
             }
             if (state is AddOrUpdateRateSuccess) {
-              customReplacementNavigate(context, widget);
+              context.pushReplacementNamed(
+                AppRoutes.productDetailsScreen,
+                extra: widget.productsModel,
+              );
             }
           },
           builder: (context, state) {
@@ -163,7 +167,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 });
                                 commentController.clear();
                                 if (context.mounted) {
-                                  customReplacementNavigate(context, widget);
+                                  context.pushReplacementNamed(
+                                    AppRoutes.productDetailsScreen,
+                                    extra: widget.productsModel,
+                                  );
                                 }
                               },
                               icon: Icon(

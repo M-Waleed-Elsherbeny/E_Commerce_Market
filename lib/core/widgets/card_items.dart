@@ -3,16 +3,16 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/cubit/get_products_cubit.dart';
-import 'package:my_e_commerce_app/core/functions/custom_navigations.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
+import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_loading.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
 import 'package:my_e_commerce_app/core/widgets/width_spacer.dart';
 import 'package:my_e_commerce_app/screens/auth/widgets/custom_button.dart';
-import 'package:my_e_commerce_app/screens/products_details/ui/product_details_screen.dart';
 import 'package:pay_with_paymob/pay_with_paymob.dart';
 
 class ProductCardItems extends StatelessWidget {
@@ -96,9 +96,9 @@ class CardItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        customPushNavigate(
-          context,
-          ProductDetailsScreen(productsModel: products),
+        context.go(
+          AppRoutes.productDetailsScreen,
+          extra: products,
         );
       },
       child: Card(

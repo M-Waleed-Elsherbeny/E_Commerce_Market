@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/database/supabase_config.dart';
 import 'package:my_e_commerce_app/core/observer/my_bloc_observer.dart';
-import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes_config.dart';
 import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,15 +31,11 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return BlocProvider(
           create: (context) => AuthenticationCubit(),
-          child: MaterialApp(
+          child: MaterialApp.router(
             title: 'E-Commerce Market',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(scaffoldBackgroundColor: AppColors.kScaffoldColor),
-            onGenerateRoute: AppRoutesConfig().onGenerateRoute,
-            initialRoute: // AppRoutes.loginScreen,
-                client.auth.currentUser != null
-                    ? AppRoutes.mainNavBar
-                    : AppRoutes.loginScreen,
+            routerConfig: AppRoutesConfig.router,
           ),
         );
       },
