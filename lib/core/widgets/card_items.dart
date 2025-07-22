@@ -71,6 +71,11 @@ class ProductCardItems extends StatelessWidget {
                             products[index].productId!,
                           );
                     },
+                    onPaymentSuccess: () {
+                      log(
+                        "Payment Success for product: ${products[index].productName}",
+                      );
+                    },
                   );
                 },
               );
@@ -85,11 +90,13 @@ class CardItems extends StatelessWidget {
     super.key,
     required this.products,
     this.onTap,
+    required this.onPaymentSuccess,
     required this.isFavorite,
   });
 
   final HomeProductsModel products;
   final VoidCallback? onTap;
+  final VoidCallback onPaymentSuccess;
   final bool isFavorite;
 
   @override
@@ -196,9 +203,7 @@ class CardItems extends StatelessWidget {
                         MaterialPageRoute(
                           builder:
                               (context) => PaymentView(
-                                onPaymentSuccess: () {
-                                  log("Payment Success");
-                                },
+                                onPaymentSuccess: onPaymentSuccess,
                                 onPaymentError: () {
                                   log("Payment Failure");
                                 },

@@ -1,13 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_e_commerce_app/core/assets/app_assets.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/widgets/card_items.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_search_field.dart';
 import 'package:my_e_commerce_app/core/widgets/height_spacer.dart';
+import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_cubit.dart';
+import 'package:my_e_commerce_app/screens/auth/logic/cubit/authentication_state.dart';
+import 'package:my_e_commerce_app/screens/auth/logic/models/user_data_model.dart';
 import 'package:my_e_commerce_app/screens/home/logic/payment_initialize.dart';
 import 'package:my_e_commerce_app/screens/home/ui/search_view.dart';
 import 'package:my_e_commerce_app/screens/home/widgets/categories_items.dart';
+import 'package:pay_with_paymob/pay_with_paymob.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,10 +25,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
+  UserDataModel? userData;
+
   @override
-  void initState() {
-    PaymentInitialize.paymentInit();
-    super.initState();
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 
   @override
@@ -46,7 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchView(query: searchController.text)),
+                  MaterialPageRoute(
+                    builder:
+                        (context) => SearchView(query: searchController.text),
+                  ),
                 );
               },
             ),
@@ -75,16 +87,27 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
           HeightSpacer(height: 15),
-          ProductCardItems(),
+          BlocProvider(
+            create: (context) => AuthenticationCubit()..getUserData(),
+            child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+              builder: (context, state) {
+                if (state is GetUserDataSuccess) {
+                  userData = context.read<AuthenticationCubit>().userDataModel;
+                  log("Home Screen User Data: ${userData?.email}");
+                    PaymentInitialize.paymentInit(
+                    userData: UserData(
+                      email: userData!.email,
+                      name: userData!.name,
+                    ),
+                  );
+                }
+                return ProductCardItems();
+              },
+            ),
+          ),
           HeightSpacer(height: 15),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    searchController.dispose();
   }
 }
