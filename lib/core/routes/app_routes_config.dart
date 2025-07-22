@@ -50,7 +50,7 @@ class AppRoutesConfig {
         builder: (BuildContext context, GoRouterState state) {
           return BlocProvider(
             create: (context) => NavBarCubit(),
-            child: const MainNavBar(),
+            child:  MainNavBar(),
           );
         },
       ),

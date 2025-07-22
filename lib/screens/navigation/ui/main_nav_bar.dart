@@ -10,13 +10,20 @@ import 'package:my_e_commerce_app/screens/profile/ui/profile_screen.dart';
 import 'package:my_e_commerce_app/screens/store/ui/store_screen.dart';
 
 class MainNavBar extends StatelessWidget {
-  const MainNavBar({super.key});
+  MainNavBar({super.key});
   final List<Widget> _screens = const [
     HomeScreen(),
     StoreScreen(),
     FavoriteScreen(),
     CartScreen(),
     ProfileScreen(),
+  ];
+  final List<GButton> tabs = [
+    GButton(icon: Icons.home_outlined, text: 'Home'),
+    GButton(icon: Icons.store_mall_directory_outlined, text: 'Store'),
+    GButton(icon: Icons.favorite_border_rounded, text: 'Favorites'),
+    GButton(icon: Icons.shopping_basket_outlined, text: 'Cart'),
+    GButton(icon: Icons.person_outline_rounded, text: 'Profile'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -54,25 +61,7 @@ class MainNavBar extends StatelessWidget {
                       horizontal: 15,
                       vertical: 10,
                     ), // navigation bar padding
-                    tabs: [
-                      GButton(icon: Icons.home_outlined, text: 'Home'),
-                      GButton(
-                        icon: Icons.store_mall_directory_outlined,
-                        text: 'Store',
-                      ),
-                      GButton(
-                        icon: Icons.favorite_border_rounded,
-                        text: 'Favorites',
-                      ),
-                      GButton(
-                        icon: Icons.shopping_basket_outlined,
-                        text: 'Cart',
-                      ),
-                      GButton(
-                        icon: Icons.person_outline_rounded,
-                        text: 'Profile',
-                      ),
-                    ],
+                    tabs: tabs,
                     onTabChange: (index) {
                       cubit.changeIndex(index);
                     },

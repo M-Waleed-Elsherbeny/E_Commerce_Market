@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
 import 'package:my_e_commerce_app/core/cubit/get_products_cubit.dart';
+import 'package:my_e_commerce_app/core/functions/custom_snack_bar.dart';
 import 'package:my_e_commerce_app/core/models/home_products_model.dart';
 import 'package:my_e_commerce_app/core/routes/app_routes.dart';
 import 'package:my_e_commerce_app/core/widgets/custom_catch_image.dart';
@@ -38,7 +39,17 @@ class ProductCardItems extends StatelessWidget {
           (context) =>
               GetProductsCubit()..getProducts(query: query, category: category),
       child: BlocConsumer<GetProductsCubit, GetProductsState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is BuyProductSuccess) {
+            customSnackBar(
+              context,
+              "Product purchased successfully!",
+              backgroundColor: AppColors.kPrimaryColor,
+            );
+            context.go(AppRoutes.mainNavBar);
+          }
+
+        },
         builder: (context, state) {
           GetProductsCubit getProductsCubit = context.read<GetProductsCubit>();
           List<HomeProductsModel> products =
@@ -71,10 +82,13 @@ class ProductCardItems extends StatelessWidget {
                             products[index].productId!,
                           );
                     },
-                    onPaymentSuccess: () {
-                      log(
-                        "Payment Success for product: ${products[index].productName}",
+                    onPaymentSuccess: () async {
+                      await getProductsCubit.buyProduct(
+                        products[index].productId!,
                       );
+                      if (context.mounted) {
+                        context.pop();
+                      }
                     },
                   );
                 },

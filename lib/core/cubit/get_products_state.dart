@@ -25,3 +25,11 @@ final class RemoveFavoriteProductLoading extends GetProductsState {}
 final class RemoveFavoriteProductSuccess extends GetProductsState {}
 
 final class RemoveFavoriteProductError extends GetProductsState {}
+
+final class GetFavoriteProductsLoading extends GetProductsState {}
+final class GetFavoriteProductsSuccess extends GetProductsState {}
+final class GetFavoriteProductsError extends GetProductsState {}
+
+final class BuyProductLoading extends GetProductsState {}
+final class BuyProductSuccess extends GetProductsState {}
+final class BuyProductError extends GetProductsState {}

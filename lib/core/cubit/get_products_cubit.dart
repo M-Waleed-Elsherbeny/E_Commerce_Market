@@ -118,4 +118,19 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       // log(favoriteProducts.first.productName!);
     }
   }
+  Future<void> buyProduct(String productId) async {
+    emit(BuyProductLoading());
+    try {
+      await _apiServices.postData("sold_products", {
+        "user_id": userId,
+        "product_id": productId,
+        "is_sold": true,
+      }, {});
+      log("Product purchased successfully");
+      emit(BuyProductSuccess());
+    } catch (e) {
+      log('Purchase Product Error: $e');
+      emit(BuyProductError());
+    }
+  }
 }
