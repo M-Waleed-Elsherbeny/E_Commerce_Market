@@ -14,12 +14,13 @@ class GetProductsCubit extends Cubit<GetProductsState> {
   List<HomeProductsModel> products = [];
   List<HomeProductsModel> searchResult = [];
   List<HomeProductsModel> categoriesResult = [];
-  List<HomeProductsModel> favoriteProducts = [];
+  List<HomeProductsModel> favoriteProductsList = [];
+  List<HomeProductsModel> soldProductsList = [];
 
   Future<void> getProducts({String? query, String? category}) async {
     emit(GetProductsLoading());
     products = [];
-    favoriteProducts = [];
+    favoriteProductsList = [];
     searchResult = [];
     categoriesResult = [];
     try {
@@ -32,7 +33,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       }
       log("1");
       getFavoriteProducts();
-      log("favoriteProducts 1 ==> ${favoriteProducts.toString()}");
+      log("favoriteProducts 1 ==> ${favoriteProductsList.toString()}");
       log("2");
       searchProduct(query ?? "");
       getProductByCategory(category ?? "");
@@ -110,7 +111,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       if (product.favoriteProductsTable!.isNotEmpty) {
         for (var favorite in product.favoriteProductsTable!) {
           if (favorite.userId == userId) {
-            favoriteProducts.add(product);
+            favoriteProductsList.add(product);
             hasFavoriteProducts.addAll({product.productId!: true});
           }
         }
@@ -118,6 +119,7 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       // log(favoriteProducts.first.productName!);
     }
   }
+
   Future<void> buyProduct(String productId) async {
     emit(BuyProductLoading());
     try {
@@ -131,6 +133,20 @@ class GetProductsCubit extends Cubit<GetProductsState> {
     } catch (e) {
       log('Purchase Product Error: $e');
       emit(BuyProductError());
+    }
+  }
+
+  void getSoldProducts() {
+    for (HomeProductsModel product in products) {
+      if (product.soldProducts!.isNotEmpty) {
+        for (var sold in product.soldProducts!) {
+          if (sold.userId == userId) {
+            soldProductsList.add(product);
+            // hasFavoriteProducts.addAll({product.productId!: true});
+          }
+        }
+      }
+      // log(favoriteProducts.first.productName!);
     }
   }
 }

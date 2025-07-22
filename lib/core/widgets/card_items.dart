@@ -48,7 +48,6 @@ class ProductCardItems extends StatelessWidget {
             );
             context.go(AppRoutes.mainNavBar);
           }
-
         },
         builder: (context, state) {
           GetProductsCubit getProductsCubit = context.read<GetProductsCubit>();
@@ -58,7 +57,7 @@ class ProductCardItems extends StatelessWidget {
                   : category != null
                   ? getProductsCubit.categoriesResult
                   : isFavoriteScreen
-                  ? getProductsCubit.favoriteProducts
+                  ? getProductsCubit.favoriteProductsList
                   : getProductsCubit.products;
           return state is GetProductsLoading
               ? CustomLoading()
