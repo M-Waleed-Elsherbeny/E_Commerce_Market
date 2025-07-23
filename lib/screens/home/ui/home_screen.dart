@@ -87,23 +87,20 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
           ),
           HeightSpacer(height: 15),
-          BlocProvider(
-            create: (context) => AuthenticationCubit()..getUserData(),
-            child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
-              builder: (context, state) {
-                if (state is GetUserDataSuccess) {
-                  userData = context.read<AuthenticationCubit>().userDataModel;
-                  log("Home Screen User Data: ${userData?.email}");
-                    PaymentInitialize.paymentInit(
-                    userData: UserData(
-                      email: userData!.email,
-                      name: userData!.name,
-                    ),
-                  );
-                }
-                return ProductCardItems();
-              },
-            ),
+          BlocBuilder<AuthenticationCubit, AuthenticationState>(
+            builder: (context, state) {
+              if (state is GetUserDataSuccess) {
+                userData = context.read<AuthenticationCubit>().userDataModel;
+                log("Home Screen User Data: ${userData?.email}");
+                  PaymentInitialize.paymentInit(
+                  userData: UserData(
+                    email: userData!.email,
+                    name: userData!.name,
+                  ),
+                );
+              }
+              return ProductCardItems();
+            },
           ),
           HeightSpacer(height: 15),
         ],

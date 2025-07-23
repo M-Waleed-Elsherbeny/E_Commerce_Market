@@ -80,9 +80,7 @@ class ProfileScreen extends StatelessWidget {
                             leftIcon: Icons.edit_rounded,
                             rightIcon: Icons.arrow_forward_ios_rounded,
                             onPressed: () {
-                              context.pushNamed(
-                                AppRoutes.editProfileScreen,
-                              );
+                              context.pushNamed(AppRoutes.editProfileScreen);
                             },
                           ),
                           HeightSpacer(height: 20),
@@ -91,9 +89,7 @@ class ProfileScreen extends StatelessWidget {
                             leftIcon: Icons.shopping_bag_rounded,
                             rightIcon: Icons.arrow_forward_ios_rounded,
                             onPressed: () {
-                              context.pushNamed(
-                                AppRoutes.myOrdersView,
-                              );
+                              context.pushNamed(AppRoutes.myOrdersView);
                             },
                           ),
                           HeightSpacer(height: 20),

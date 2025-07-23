@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:my_e_commerce_app/core/colors/app_colors.dart';
+import 'package:my_e_commerce_app/screens/cart/ui/my_cart_screen.dart';
 import 'package:my_e_commerce_app/screens/favorite/ui/favorite_screen.dart';
 import 'package:my_e_commerce_app/screens/home/ui/home_screen.dart';
 import 'package:my_e_commerce_app/screens/navigation/logic/cubit/nav_bar_cubit.dart';
 import 'package:my_e_commerce_app/screens/profile/ui/profile_screen.dart';
-import 'package:my_e_commerce_app/screens/profile/widgets/my_orders_view.dart';
 import 'package:my_e_commerce_app/screens/store/ui/store_screen.dart';
 
 class MainNavBar extends StatelessWidget {
@@ -15,7 +15,7 @@ class MainNavBar extends StatelessWidget {
     HomeScreen(),
     StoreScreen(),
     FavoriteScreen(),
-    MyOrdersView(),
+    MyCartScreen(),
     ProfileScreen(),
   ];
   final List<GButton> tabs = [

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return BlocProvider(
-          create: (context) => AuthenticationCubit(),
+          create: (context) => AuthenticationCubit()..getUserData(),
           child: MaterialApp.router(
             title: 'E-Commerce Market',
             debugShowCheckedModeBanner: false,
