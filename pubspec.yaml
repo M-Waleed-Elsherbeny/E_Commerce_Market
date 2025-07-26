@@ -28,11 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cached_network_image: ^3.4.1
+  cached_network_image: ^3.3.1
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
   flutter:
     sdk: flutter
+  # To Generate keystore
+  # flutter pub pub run flutter_automation --android-sign
+  flutter_automation: ^2.0.0 
   flutter_bloc: ^9.1.1
   flutter_rating_bar: ^4.0.1
   flutter_screenutil: ^5.9.3
