@@ -11,7 +11,7 @@ class MyOrdersView extends StatelessWidget {
       appBar: buildCustomAppBar(context, "My Orders"),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Center(child: Column(children: [ProductCardItems()])),
+          child: Center(child: Column(children: [ProductCardItems(isSoldScreen: true,)])),
         ),
       ),
     );

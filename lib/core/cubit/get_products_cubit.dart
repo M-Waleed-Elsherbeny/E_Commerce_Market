@@ -35,6 +35,8 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       getFavoriteProducts();
       log("favoriteProducts 1 ==> ${favoriteProductsList.toString()}");
       log("2");
+      getSoldProducts();
+      log("soldProducts 1 ==> ${soldProductsList.toString()}");
       searchProduct(query ?? "");
       getProductByCategory(category ?? "");
       emit(GetProductsSuccess());
@@ -134,6 +136,10 @@ class GetProductsCubit extends Cubit<GetProductsState> {
       log('Purchase Product Error: $e');
       emit(BuyProductError());
     }
+  }
+
+  bool isProductSold(String productId) {
+    return soldProductsList.any((product) => product.productId == productId);
   }
 
   void getSoldProducts() {

@@ -25,12 +25,13 @@ class ProductCardItems extends StatelessWidget {
     this.query,
     this.category,
     this.isFavoriteScreen = false,
+    this.isSoldScreen = false,
   });
   final bool? isShrinkWrap;
   final ScrollPhysics? physics;
   final VoidCallback? onTap;
   final String? query, category;
-  final bool isFavoriteScreen;
+  final bool isFavoriteScreen, isSoldScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,8 @@ class ProductCardItems extends StatelessWidget {
                   ? getProductsCubit.categoriesResult
                   : isFavoriteScreen
                   ? getProductsCubit.favoriteProductsList
+                  : isSoldScreen
+                  ? getProductsCubit.soldProductsList
                   : getProductsCubit.products;
           return state is GetProductsLoading
               ? CustomLoading()
@@ -72,6 +75,9 @@ class ProductCardItems extends StatelessWidget {
                   return CardItems(
                     products: products[index],
                     isFavorite: isFavorite,
+                    textButton: getProductsCubit.isProductSold(
+                      products[index].productId!,
+                    )? "Buy Again" : "Buy Now",
                     onTap: () {
                       isFavorite
                           ? getProductsCubit.deleteFavoriteProduct(
@@ -86,7 +92,7 @@ class ProductCardItems extends StatelessWidget {
                         products[index].productId!,
                       );
                       if (context.mounted) {
-                        context.pop();
+                        context.pushReplacementNamed(AppRoutes.mainNavBar);
                       }
                     },
                   );
@@ -104,13 +110,14 @@ class CardItems extends StatelessWidget {
     required this.products,
     this.onTap,
     required this.onPaymentSuccess,
-    required this.isFavorite,
+    required this.isFavorite,required this.textButton,
   });
 
   final HomeProductsModel products;
   final VoidCallback? onTap;
   final VoidCallback onPaymentSuccess;
   final bool isFavorite;
+  final String textButton;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +216,7 @@ class CardItems extends StatelessWidget {
                   ),
                   Spacer(),
                   CustomButton(
-                    textButton: "Buy Now",
+                    textButton: textButton,
                     onPressed: () {
                       Navigator.push(
                         context,
